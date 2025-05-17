@@ -1,0 +1,84 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 100%;
+}
+
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+ul {
+  margin: 20px auto;
+  display: flex;
+  list-style-type: none;
+  width: 100%;
+  justify-content: center;
+}
+
+ul li a {
+  text-decoration: none;
+  color: black;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  padding: 5px 10px;
+}
+
+ul li:not(:nth-child(1)) a {
+  margin-left: -1px;
+}
+
+ul li a.active {
+  background-color: #4E71FF;
+  color: white;
+}
+
+form.search {
+  width: 40%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  margin-left: auto;
+}
+
+form.search input[type="text"] {
+  flex: 6;
+  border: 1px solid black;
+  outline: none;
+}
+
+form.search input[type="submit"] {
+  outline: none;
+  border: 1px solid black;
+  flex: 1;
+  background: #4E71FF;
+  color: white;
+  cursor: pointer;
+}
+
+form.search input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 8px;
+}
