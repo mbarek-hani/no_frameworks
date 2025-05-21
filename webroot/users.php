@@ -19,16 +19,11 @@ $search = mh_sanitize_search_query_username("q");
 
 $pdo = mh_database_get_connection();
 
-$total_users = 0;
-if (empty($search)) {
-    $statement = $pdo->query("select count(*) from users");
-    $total_users = $statement->fetchColumn(0);
-}else {
-    $statement = $pdo->prepare("select count(*) from users where username like :search");
-    $statement->bindValue(":search", "%" . $search . "%");
-    $statement->execute();
-    $total_users = $statement->fetchColumn(0);
-}
+$statement = $pdo->prepare("select count(*) from users where username like :search");
+$statement->bindValue(":search", "%" . $search . "%");
+$statement->execute();
+$total_users = $statement->fetchColumn(0);
+
 
 $total_pages = intval(ceil($total_users / $size));
 if ($total_pages > 0 && $page > $total_pages) {

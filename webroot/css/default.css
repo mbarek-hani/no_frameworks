@@ -82,3 +82,58 @@ form.search input {
   min-width: 0;
   padding: 8px;
 }
+
+form.edit {
+  padding: 0 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+form.edit div {
+  width: 100%;
+  display: flex;
+  gap: 6px;
+  flex-direction: column;
+}
+
+form.edit div input {
+  max-width: 100%;
+  min-width: 0;
+  padding: 5px;
+  outline: none;
+  border: 1px solid black;
+  font-size: 18px;
+}
+
+form.edit div:last-child {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+form.edit input[type="submit"],
+form.edit a {
+  display: inline-block;
+  padding: 8px;
+  font-size: 15px;
+  border: 1px solid black;
+}
+
+form.edit input[type="submit"] {
+  background: #4E71FF;
+  color: white;
+  cursor: pointer;
+}
+
+form.edit a {
+  background: lightgray;
+  outline: none;
+  text-decoration: none;
+  color: black;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}

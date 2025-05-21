@@ -43,3 +43,12 @@ function mh_request_get_int_query_parameter(string $parameter, int $min, int $ma
 
     return $value; 
 }
+
+function mh_request_is_method(string $method):bool {
+    return $_SERVER["REQUEST_METHOD"] === $method;
+}
+
+function mh_request_redirect(string $url): never {
+    header("Location: $url");
+    exit();
+}

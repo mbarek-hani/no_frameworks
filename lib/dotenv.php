@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 function mh_dotenv_load($path) {
     if (!file_exists($path)) return;
 

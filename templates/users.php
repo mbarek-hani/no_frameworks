@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>All users</title>
-    <link rel="stylesheet" href="css/default.css" />
+    <link rel="stylesheet" href="/css/default.css" />
 </head>
 
 <body>
@@ -27,7 +27,7 @@
                 <?php foreach($users as $user): ?>
                     <tr>
                         <td><?= $user["id"]; ?></td>
-                        <td><?= $user["username"]; ?></td>
+                        <td><a href="/users/edit/<?= htmlspecialchars($user["id"]) ?>"><?= $user["username"]; ?></a></td>
                         <td><?= $user["first_name"]; ?></td>
                         <td><?= $user["last_name"]; ?></td>
                         <td><?= $user["email"]; ?></td>

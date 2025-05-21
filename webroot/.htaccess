@@ -18,4 +18,5 @@
 	
     # Pretty URL rewrite
     RewriteRule ^users$ users.php [NC,L]
+    RewriteRule ^users/edit/([0-9]+)$ users-edit.php?id=$1 [NC,L]
 </IfModule>
