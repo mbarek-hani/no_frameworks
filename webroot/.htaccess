@@ -14,9 +14,11 @@
         Options -MultiViews
     </IfModule>
 	
-	  Options -Indexes
+    Options -Indexes
 	
     # Pretty URL rewrite
     RewriteRule ^users$ users.php [NC,L]
+    RewriteRule ^users/add$ users-add.php [NC,L]
     RewriteRule ^users/edit/([0-9]+)$ users-edit.php?id=$1 [NC,L]
+    RewriteRule ^users/delete/([0-9]+)$ users-delete.php?id=$1 [NC,L]
 </IfModule>

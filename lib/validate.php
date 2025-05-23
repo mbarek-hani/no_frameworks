@@ -1,23 +1,32 @@
 <?php
 declare(strict_types=1);
 
-function mh_validate_username(string $username): bool {
-    if (!preg_match("/^[a-zA-Z][a-zA-Z0-9]{3,31}/", $username)) {
-        return false;
+function mh_validate_username(string $username, string $fieldname):string {
+    $msg = "";
+    if (empty($username)) {
+        $msg = "$fieldname is required";
+    }elseif(!preg_match("/^[a-zA-Z][a-zA-Z0-9]{3,31}/", $username)) {
+        $msg = "$fieldname should be min 4 max 32 alphanumeric characters starting with a letter";
     }
-    return true;
+    return $msg;
 }
 
-function mh_validate_name(string $name): bool {
-    if (!preg_match("/^[a-zA-Z]{4,15}/", $name)) {
-        return false;
+function mh_validate_email(string $email, string $fieldname):string {
+    $msg = "";
+    if (empty($email)) {
+        $msg = "$fieldname is required";
+    }elseif(filter_var($email, FILTER_VALIDATE_EMAIL, FILTER_NULL_ON_FAILURE) === null) {
+        $msg = "invalid email address";
     }
-    return true;
+    return $msg;
 }
 
-function mh_validate_email(string $email): bool {
-    if (filter_var($email, FILTER_VALIDATE_EMAIL, FILTER_NULL_ON_FAILURE) === null) {
-        return false;
+function mh_validate_name(string $name, string $fieldname):string {
+    $msg = "";
+    if (empty($name)) {
+        $msg = "$fieldname is required";
+    }elseif(!preg_match("/^[a-zA-Z]{4,15}/", $name)) {
+        $msg = "$fieldname should be min 4 max 15 letters";
     }
-    return true;
+    return $msg;
 }

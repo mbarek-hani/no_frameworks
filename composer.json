@@ -1,0 +1,11 @@
+{
+    "name": "kira/website",
+    "type": "project",
+    "authors": [
+        {
+            "name": "mbarek-hani",
+            "email": "mbarekhani30@gmail.com"
+        }
+    ],
+    "require": {}
+}

@@ -17,9 +17,10 @@
             <tr>
                 <th width="5%">#</th>
                 <th width="20%">username</th>
-                <th width="20%">first name</th>
-                <th width="20%">last name</th>
-                <th width="35%">email</th>
+                <th width="15%">first name</th>
+                <th width="15%">last name</th>
+                <th width="30%">email</th>
+                <th width="15%">actions</th>
             </tr>
         </thead>
         <tbody>
@@ -27,10 +28,14 @@
                 <?php foreach($users as $user): ?>
                     <tr>
                         <td><?= $user["id"]; ?></td>
-                        <td><a href="/users/edit/<?= htmlspecialchars($user["id"]) ?>"><?= $user["username"]; ?></a></td>
+                        <td><?= $user["username"]; ?></td>
                         <td><?= $user["first_name"]; ?></td>
                         <td><?= $user["last_name"]; ?></td>
                         <td><?= $user["email"]; ?></td>
+                        <td class="actions">
+                            <a href="/users/edit/<?= htmlspecialchars($user["id"]) ?>">Edit</a>
+                            <a href="/users/delete/<?= htmlspecialchars($user["id"]) ?>">Delete</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>

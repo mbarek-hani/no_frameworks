@@ -17,7 +17,6 @@ table {
   width: 100%;
 }
 
-
 th,
 td {
   padding: 8px;
@@ -49,7 +48,7 @@ ul li:not(:nth-child(1)) a {
 }
 
 ul li a.active {
-  background-color: #4E71FF;
+  background-color: #4e71ff;
   color: white;
 }
 
@@ -71,7 +70,7 @@ form.search input[type="submit"] {
   outline: none;
   border: 1px solid black;
   flex: 1;
-  background: #4E71FF;
+  background: #4e71ff;
   color: white;
   cursor: pointer;
 }
@@ -121,7 +120,7 @@ form.edit a {
 }
 
 form.edit input[type="submit"] {
-  background: #4E71FF;
+  background: #4e71ff;
   color: white;
   cursor: pointer;
 }
@@ -136,4 +135,22 @@ form.edit a {
 .error {
   color: red;
   font-size: 12px;
+}
+
+.actions a {
+  padding: 2px 8px;
+  outline: none;
+  text-decoration: none;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+
+.actions a:first-child {
+  background-color: lightgreen;
+  color: black;
+}
+
+.actions a:last-child {
+  background-color: red;
+  color: white;
 }

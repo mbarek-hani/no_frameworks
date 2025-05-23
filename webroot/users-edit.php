@@ -40,38 +40,11 @@ if (mh_request_is_method("GET")) {
             "email" => trim($_POST["email"] ?? ""),
     ];
 
-    if (empty($edited_user["username"])) {
-        $errors["username"] = "username is required";
-    }
+    $errors["username"] = mh_validate_username($edited_user["username"], "username");
+    $errors["first_name"] = mh_validate_name($edited_user["first_name"], "first name");
+    $errors["last_name"] = mh_validate_name($edited_user["last_name"], "last name");
+    $errors["email"] = mh_validate_email($edited_user["email"], "email");
     
-    if (empty($edited_user["first_name"])) {
-        $errors["first_name"] = "first name is required";
-    }
-
-    if (empty($edited_user["last_name"])) {
-        $errors["last_name"] = "last name is required";
-    }
-
-    if (empty($edited_user["email"])) {
-        $errors["email"] = "email is required";
-    }
-
-    if (empty($errors["username"]) && !mh_validate_username($edited_user["username"])) {
-        $errors["username"] = "username must start with a letter with at least 4 letters or numbers up to 32";
-    }
-
-    if (empty($errors["first_name"]) && !mh_validate_name($edited_user["first_name"])) {
-        $errors["first_name"] = "first name must be between 4 and 15 letters";
-    }
-
-    if (empty($errors["last_name"]) && !mh_validate_name($edited_user["last_name"])) {
-        $errors["last_name"] = "last name must be between 4 and 15 letters";
-    }
-
-    if (empty($errors["email"]) && !mh_validate_email($edited_user["email"])) {
-        $errors["email"] = "invalid email address";
-    }
-
     if (empty($errors["username"]) && mh_database_does_username_exist($pdo, $edited_user["username"], $id)) {
         $errors["username"] = "username already in use";
     }
@@ -80,7 +53,10 @@ if (mh_request_is_method("GET")) {
         $errors["email"] = "email already in use";
     }
  
-    if (empty($errors["first_name"]) && mh_database_does_name_exist($pdo, $edited_user["first_name"], $edited_user["last_name"], $id)) {
+    if (
+        (empty($errors["first_name"]) && empty($errors["last_name"])) && 
+        mh_database_does_name_exist($pdo, $edited_user["first_name"], $edited_user["last_name"], $id)
+    ) {
         $errors["first_name"] = "first name and last name already in use";
     }
 
