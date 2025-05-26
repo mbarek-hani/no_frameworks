@@ -1,24 +1,22 @@
-<IfModule mod_rewrite.c>
-    RewriteEngine on
+RewriteEngine on
 
-    # Prevent direct access to PHP files
-    RewriteCond %{THE_REQUEST} \.php [NC]
-    RewriteRule .* - [R=404]
+# Prevent direct access to PHP files
+RewriteCond %{THE_REQUEST} \.php [NC]
+RewriteRule .* - [R=404]
 
-    # Return 404 when accessing root "/"
-    RewriteCond %{REQUEST_URI} ^/$
-    RewriteRule .* - [R=404,L]
+# Return 404 when accessing root "/"
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule .* - [R=404,L]
 
-    # Disable MultiViews
-    <IfModule mod_negotiation.c>
-        Options -MultiViews
-    </IfModule>
-	
-    Options -Indexes
-	
-    # Pretty URL rewrite
-    RewriteRule ^users$ users.php [NC,L]
-    RewriteRule ^users/add$ users-add.php [NC,L]
-    RewriteRule ^users/edit/([0-9]+)$ users-edit.php?id=$1 [NC,L]
-    RewriteRule ^users/delete/([0-9]+)$ users-delete.php?id=$1 [NC,L]
+# Disable MultiViews
+<IfModule mod_negotiation.c>
+    Options -MultiViews
 </IfModule>
+
+Options -Indexes
+
+# Pretty URL rewrite
+RewriteRule ^users$ users.php [NC,L]
+RewriteRule ^users/add$ users-add.php [NC,L]
+RewriteRule ^users/edit/([0-9]+)$ users-edit.php?id=$1 [NC,L]
+RewriteRule ^users/delete/([0-9]+)$ users-delete.php?id=$1 [NC,L]
