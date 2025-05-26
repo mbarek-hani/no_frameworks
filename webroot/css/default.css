@@ -5,193 +5,340 @@
 }
 
 html {
-  background-color: #181818;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  min-height: 100vh;
 }
 
 body {
-  color: white;
+  color: #e0e6ed;
   max-width: 1300px;
   margin: 0 auto;
-  font-family: sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
-  gap: 20px;
+  gap: 30px;
+  min-height: 100vh;
+  padding: 20px;
 }
 
+/* Modern Table Styling */
 table {
   border-collapse: collapse;
-  border: 1px solid white;
+  border: none;
   overflow: hidden;
   width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-tr {
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
+thead {
+  background: linear-gradient(135deg, #4a9eff 0%, #0078d4 100%);
 }
 
-th,
-td {
-  padding: 8px;
+th {
+  padding: 16px;
   text-align: left;
+  font-weight: 600;
+  color: white;
+  font-size: 14px;
 }
 
+td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+tr:hover td {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* Enhanced Pagination */
 ul {
-  margin: 20px auto;
+  margin: 30px auto;
   display: flex;
   list-style-type: none;
   width: 100%;
   justify-content: center;
+  gap: 5px;
 }
 
 ul li a {
   text-decoration: none;
-  color: black;
+  color: #e0e6ed;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid white;
-  padding: 5px 10px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 16px;
   cursor: pointer;
-  color: white;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
 }
 
-ul li:not(:nth-child(1)) a {
-  margin-left: -1px;
+ul li a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #4a9eff;
 }
 
 ul li a.active {
-  background-color: #4e71ff;
+  background: linear-gradient(135deg, #4a9eff 0%, #0078d4 100%);
+  border-color: #4a9eff;
+  color: white;
 }
 
+/* Modern Search Form */
 form.search {
-  width: 40%;
+  width: 50%;
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   display: flex;
   margin-left: auto;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
 }
 
 form.search input[type="text"] {
   flex: 6;
-  border: 1px solid white;
+  border: none;
   outline: none;
-  background-color: #505050;
-  color: white;
-  font-size: 15px;
+  background: transparent;
+  color: #e0e6ed;
+  font-size: 16px;
+  padding: 14px 20px;
 }
 
 form.search input[type="text"]::placeholder {
-  color: white;
+  color: rgba(224, 230, 237, 0.6);
 }
 
 form.search input[type="submit"] {
   outline: none;
-  border: 1px solid white;
-  background: #4e71ff;
+  border: none;
+  background: linear-gradient(135deg, #4a9eff 0%, #0078d4 100%);
   color: white;
-  font-weight: bold;
-  font-size: 15px;
+  font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
-  margin-left: -1px;
   flex: 1;
+  padding: 14px 20px;
 }
 
-form.search input {
-  width: 100%;
-  min-width: 0;
-  padding: 8px;
+form.search input[type="submit"]:hover {
+  background: linear-gradient(135deg, #0078d4 0%, #4a9eff 100%);
 }
 
+/* Enhanced Edit Form */
 form.edit {
-  margin-top: 20px;
-  padding: 0 15px;
+  margin-top: 40px;
+  padding: 30px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 form.edit div {
   width: 100%;
   display: flex;
-  gap: 6px;
+  gap: 8px;
   flex-direction: column;
+}
+
+form.edit div label {
+  font-weight: 600;
+  color: #e0e6ed;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
 form.edit div input {
   max-width: 100%;
   min-width: 0;
-  padding: 5px;
+  padding: 14px 16px;
   outline: none;
-  border: 1px solid white;
-  font-size: 18px;
-  background-color: #505050;
-  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #e0e6ed;
+  border-radius: 8px;
+}
+
+form.edit div input:focus {
+  border-color: #4a9eff;
+  box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 form.edit div:last-child {
   flex-direction: row;
   justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 form.edit input[type="submit"],
 form.edit a {
   display: inline-block;
-  padding: 8px;
-  font-size: 15px;
-  border: 1px solid white;
-}
-
-form.edit input[type="submit"] {
-  background: #4e71ff;
-  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
   cursor: pointer;
 }
 
-form.edit a {
-  background: #505050;
-  outline: none;
-  text-decoration: none;
+form.edit input[type="submit"] {
+  background: linear-gradient(135deg, #4a9eff 0%, #0078d4 100%);
   color: white;
 }
 
+form.edit input[type="submit"]:hover {
+  background: linear-gradient(135deg, #0078d4 0%, #4a9eff 100%);
+}
+
+form.edit a {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e0e6ed;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+form.edit a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Enhanced Error Messages */
 .error {
-  background-color: #ee1212;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
   color: white;
-  padding: 5px 1px;
+  padding: 10px 15px;
   width: fit-content;
-  font-size: 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(238, 90, 82, 0.3);
+  font-weight: 500;
+}
+
+/* Modern Action Buttons */
+.actions {
+  display: flex;
+  gap: 8px;
 }
 
 .actions a,
 .actions button {
-  padding: 2px 8px;
-  border: 1px solid black;
-  border-radius: 3px;
+  padding: 8px 16px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 15px;
-  border: 1px solid white;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
 }
 
 .actions a {
-  background-color: #505050;
-  outline: none;
-  text-decoration: none;
+  background: linear-gradient(135deg, #4a9eff 0%, #0078d4 100%);
   color: white;
+  border: none;
+}
+
+.actions a:hover {
+  background: linear-gradient(135deg, #0078d4 0%, #4a9eff 100%);
 }
 
 .actions button {
-  background-color: #ee1212;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
   color: white;
-  appearance: none;
+  border: none;
 }
 
+.actions button:hover {
+  background: linear-gradient(135deg, #ee5a52 0%, #ff6b6b 100%);
+}
+
+/* Enhanced Content Area */
 .content {
   flex: 1;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
+/* Enhanced Sidebar */
 .sidebar {
-  width: 200px;
-  background-color: #505050;
-  box-shadow: 3px 3px 10px black;
+  width: 250px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 20px;
+  height: fit-content;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-nav {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  margin: 0;
+}
+
+.sidebar-nav .header {
+  color: #4a9eff;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.sidebar-nav li {
+  display: flex;
+  gap: 0;
+}
+
+.sidebar-nav li a:first-child {
+  flex: 1;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.sidebar-nav li a:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: none;
+}
+
+.sidebar-nav a {
+  padding: 12px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+}
+
+.sidebar-nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(74, 158, 255, 0.3);
+}
+
+.sidebar-nav .active a {
+  background: linear-gradient(135deg, #4a9eff 0%, #0078d4 100%);
+  color: white;
 }
