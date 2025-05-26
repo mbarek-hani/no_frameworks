@@ -4,25 +4,35 @@
   box-sizing: border-box;
 }
 
+html {
+  background-color: #181818;
+}
+
 body {
-  max-width: 1000px;
+  color: white;
+  max-width: 1300px;
   margin: 0 auto;
   font-family: sans-serif;
+  display: flex;
+  gap: 20px;
 }
 
 table {
   border-collapse: collapse;
-  border: 1px solid black;
-  border-radius: 10px;
+  border: 1px solid white;
+  overflow: hidden;
   width: 100%;
+}
+
+tr {
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
 }
 
 th,
 td {
   padding: 8px;
   text-align: left;
-  border-radius: 10px;
-  border: 1px solid black;
 }
 
 ul {
@@ -39,8 +49,10 @@ ul li a {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+  border: 1px solid white;
   padding: 5px 10px;
+  cursor: pointer;
+  color: white;
 }
 
 ul li:not(:nth-child(1)) a {
@@ -49,7 +61,6 @@ ul li:not(:nth-child(1)) a {
 
 ul li a.active {
   background-color: #4e71ff;
-  color: white;
 }
 
 form.search {
@@ -62,27 +73,37 @@ form.search {
 
 form.search input[type="text"] {
   flex: 6;
-  border: 1px solid black;
+  border: 1px solid white;
   outline: none;
+  background-color: #505050;
+  color: white;
+  font-size: 15px;
+}
+
+form.search input[type="text"]::placeholder {
+  color: white;
 }
 
 form.search input[type="submit"] {
   outline: none;
-  border: 1px solid black;
-  flex: 1;
+  border: 1px solid white;
   background: #4e71ff;
   color: white;
+  font-weight: bold;
+  font-size: 15px;
   cursor: pointer;
+  margin-left: -1px;
+  flex: 1;
 }
 
 form.search input {
-  flex: 1;
   width: 100%;
   min-width: 0;
   padding: 8px;
 }
 
 form.edit {
+  margin-top: 20px;
   padding: 0 15px;
   width: 100%;
   display: flex;
@@ -102,8 +123,10 @@ form.edit div input {
   min-width: 0;
   padding: 5px;
   outline: none;
-  border: 1px solid black;
+  border: 1px solid white;
   font-size: 18px;
+  background-color: #505050;
+  color: white;
 }
 
 form.edit div:last-child {
@@ -116,7 +139,7 @@ form.edit a {
   display: inline-block;
   padding: 8px;
   font-size: 15px;
-  border: 1px solid black;
+  border: 1px solid white;
 }
 
 form.edit input[type="submit"] {
@@ -126,31 +149,49 @@ form.edit input[type="submit"] {
 }
 
 form.edit a {
-  background: lightgray;
+  background: #505050;
   outline: none;
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 .error {
-  color: red;
+  background-color: #ee1212;
+  color: white;
+  padding: 5px 1px;
+  width: fit-content;
   font-size: 12px;
 }
 
-.actions a {
+.actions a,
+.actions button {
   padding: 2px 8px;
-  outline: none;
-  text-decoration: none;
   border: 1px solid black;
   border-radius: 3px;
+  cursor: pointer;
+  font-size: 15px;
+  border: 1px solid white;
 }
 
-.actions a:first-child {
-  background-color: lightgreen;
-  color: black;
-}
-
-.actions a:last-child {
-  background-color: red;
+.actions a {
+  background-color: #505050;
+  outline: none;
+  text-decoration: none;
   color: white;
+}
+
+.actions button {
+  background-color: #ee1212;
+  color: white;
+  appearance: none;
+}
+
+.content {
+  flex: 1;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #505050;
+  box-shadow: 3px 3px 10px black;
 }
