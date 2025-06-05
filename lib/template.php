@@ -14,3 +14,15 @@ function mh_template_render_pager(string $url,string $search_query, int $total_p
         require "../templates/pager.php";
     }
 }
+
+function mh_template_render_header(string $title):void {
+    require "../templates/header.php";
+}
+
+function mh_template_render_sidebar():void {
+    require "../templates/sidebar.php";
+}
+
+function mh_template_render_footer():void {
+    require "../templates/footer.php";
+}

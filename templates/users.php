@@ -1,22 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <title>All users</title>
-    <link rel="stylesheet" href="/css/default.css" />
-</head>
-
-<body>
-    <div class="sidebar">
-        <ul class="sidebar-nav">
-            <li class="header">Access control</li>
-            <li class="active">
-                <a href="/users">Users</a>
-                <a href="/users/add">+</a>
-            </li>
-        </ul>
-    </div>
     <div class="content">
         <form class="search" method="get" action="/users">
             <input type="text" name="q" placeholder="Search with username ..." value="<?= htmlspecialchars($search_query) ?>"/>
@@ -58,6 +39,3 @@
         </table>
         <?php mh_template_render_pager($url, $search_query, $total_pages, $size, $current_page); ?>
     </div>
-</body>
-
-</html>

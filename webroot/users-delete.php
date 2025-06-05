@@ -5,7 +5,7 @@ require "../lib/errors.php";
 require "../lib/database.php";
 require "../lib/request.php";
 
-mh_request_assert_method("GET");
+mh_request_assert_method("POST");
 
 $id = mh_request_get_int_query_parameter("id", 1, PHP_INT_MAX);
 

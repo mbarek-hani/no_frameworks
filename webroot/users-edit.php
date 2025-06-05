@@ -75,4 +75,7 @@ if (mh_request_is_method("GET")) {
 
 $data = mh_template_escape_array($user ?? $edited_user);
 
+mh_template_render_header("Edit user");
+mh_template_render_sidebar();
 mh_render_users_edit($data, $errors);
+mh_template_render_footer();

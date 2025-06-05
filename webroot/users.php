@@ -38,4 +38,7 @@ $statement->execute();
 
 $users = mh_template_escape_array_of_arrays($statement->fetchAll(PDO::FETCH_ASSOC));
 
+mh_template_render_header("Users");
+mh_template_render_sidebar();
 mh_render_users($users, "/users", $search, $total_pages, $page, $size);
+mh_template_render_footer();

@@ -55,7 +55,7 @@ if (mh_request_is_method("POST")) {
         (empty($errors["first_name"]) && empty($errors["last_name"])) &&
         mh_database_does_name_exist($pdo, $added_user["first_name"], $added_user["last_name"])
     ) {
-        $errors["first_name"] = "first name and last name already in use";
+        $errors["first_name"] = "first name and last name are already in use";
     }
 
     if (empty($errors["username"]) && empty($errors["first_name"]) && empty($errors["last_name"]) && empty($errors["email"])) {
@@ -72,4 +72,7 @@ if (mh_request_is_method("POST")) {
 
 $data = mh_template_escape_array($added_user);
 
+mh_template_render_header("Add user");
+mh_template_render_sidebar();
 mh_render_users_add($data, $errors);
+mh_template_render_footer();
