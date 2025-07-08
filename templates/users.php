@@ -25,7 +25,7 @@
                             <td><?= $user["email"]; ?></td>
                             <td class="actions">
                                 <a href="/users/edit/<?= htmlspecialchars($user["id"]) ?>">Edit</a>
-                                <form id="form<?= htmlspecialchars($user["id"]) ?>" action="/users/delete/<?= htmlspecialchars($user["id"]) ?>" method="POST" style="display: none;"></form>
+                                <form class="deleteForm" id="form<?= htmlspecialchars($user["id"]) ?>" action="/users/delete/<?= htmlspecialchars($user["id"]) ?>" method="POST" style="display: none;"></form>
                                 <button form="form<?= htmlspecialchars($user["id"]) ?>" type="submit">Delete</button>
                             </td>
                         </tr>
@@ -39,3 +39,13 @@
         </table>
         <?php mh_template_render_pager($url, $search_query, $total_pages, $size, $current_page); ?>
     </div>
+    <script>
+        const deleteForms = document.querySelectorAll(".deleteForm");
+        for (let i = 0; i<deleteForms.length; i++) {
+            deleteForms[i].addEventListener("submit", (e) => {
+                if(!confirm("Are you sure you want to delete this user?")) {
+                    e.preventDefault();
+                }
+            });
+        }
+    </script>
