@@ -18,16 +18,16 @@ function mh_render_users_add(array $user, array $errors): void
 $pdo = mh_database_get_connection();
 
 $errors = [
-	"username" => "",
-	"first_name" => "",
-	"last_name" => "",
-	"email" => "",
+	"username" => null,
+	"first_name" => null,
+	"last_name" => null,
+	"email" => null
 ];
 $added_user = [
-	"username" => "",
-	"first_name" => "",
-	"last_name" => "",
-	"email" => "",
+	"username" => null,
+	"first_name" => null,
+	"last_name" => null,
+	"email" => null
 ];
 
 if (mh_request_is_method("POST")) {
@@ -43,22 +43,22 @@ if (mh_request_is_method("POST")) {
 	$errors["last_name"] = mh_validate_name($added_user["last_name"], "last name");
 	$errors["email"] = mh_validate_email($added_user["email"], "email");
 
-	if (empty($errors["username"]) && mh_database_does_username_exist($pdo, $added_user["username"])) {
+	if (is_null($errors["username"]) && mh_database_does_username_exist($pdo, $added_user["username"])) {
 		$errors["username"] = "username already in use";
 	}
 
-	if (empty($errors["email"]) && mh_database_does_email_exist($pdo, $added_user["email"])) {
+	if (is_null($errors["email"]) && mh_database_does_email_exist($pdo, $added_user["email"])) {
 		$errors["email"] = "email already in use";
 	}
 
 	if (
-		(empty($errors["first_name"]) && empty($errors["last_name"])) &&
+		(is_null($errors["first_name"]) && is_null($errors["last_name"])) &&
 		mh_database_does_name_exist($pdo, $added_user["first_name"], $added_user["last_name"])
 	) {
 		$errors["first_name"] = "first name and last name are already in use";
 	}
 
-	if (empty($errors["username"]) && empty($errors["first_name"]) && empty($errors["last_name"]) && empty($errors["email"])) {
+	if (mh_errors_is_empty($errors)) {
 		$statement = $pdo->prepare("insert into users(username, first_name, last_name, email) values (:username, :first_name, :last_name, :email)");
 		$statement->bindValue(":username", $added_user["username"], PDO::PARAM_STR);
 		$statement->bindValue(":first_name", $added_user["first_name"], PDO::PARAM_STR);

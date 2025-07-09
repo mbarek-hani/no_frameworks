@@ -26,3 +26,7 @@ function mh_template_render_sidebar():void {
 function mh_template_render_footer():void {
     require "../templates/footer.php";
 }
+
+function mh_template_render_404():void {
+    require "../templates/404.php";
+}

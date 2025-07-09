@@ -33,7 +33,7 @@ if ($total_pages > 0 && $page > $total_pages) {
 $statement = $pdo->prepare("select * from users where username like :search limit :offset, :limit");
 $statement->bindValue(":offset", ($page - 1) * $size, PDO::PARAM_INT);
 $statement->bindValue(":limit", $size, PDO::PARAM_INT);
-$statement->bindValue(":search", "%" . $search . "%");
+$statement->bindValue(":search", "%" . $search . "%", PDO::PARAM_STR);
 $statement->execute();
 
 $users = mh_template_escape_array_of_arrays($statement->fetchAll(PDO::FETCH_ASSOC));

@@ -19,10 +19,10 @@ $pdo = mh_database_get_connection();
 
 $user = null;
 $errors = [
-        "username" => "",
-        "first_name" => "",
-        "last_name" => "",
-        "email" => "",
+        "username" => null,
+        "first_name" => null,
+        "last_name" => null,
+        "email" => null
 ];
 $edited_user = null;
 
@@ -31,6 +31,11 @@ if (mh_request_is_method("GET")) {
     $statement->bindValue(":id", $id, PDO::PARAM_INT);
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
+    if (!$user) {
+        http_response_code(404);
+        mh_template_render_404();
+        die();
+    }
 }else {
     $edited_user = [
             "id" => $id,
@@ -45,29 +50,28 @@ if (mh_request_is_method("GET")) {
     $errors["last_name"] = mh_validate_name($edited_user["last_name"], "last name");
     $errors["email"] = mh_validate_email($edited_user["email"], "email");
     
-    if (empty($errors["username"]) && mh_database_does_username_exist($pdo, $edited_user["username"], $id)) {
+    if (is_null($errors["username"]) && mh_database_does_username_exist($pdo, $edited_user["username"], $id)) {
         $errors["username"] = "username already in use";
     }
 
-    if (empty($errors["email"]) && mh_database_does_email_exist($pdo, $edited_user["email"], $id)) {
+    if (is_null($errors["email"]) && mh_database_does_email_exist($pdo, $edited_user["email"], $id)) {
         $errors["email"] = "email already in use";
     }
  
     if (
-        (empty($errors["first_name"]) && empty($errors["last_name"])) && 
+        (is_null($errors["first_name"]) && is_null($errors["last_name"])) && 
         mh_database_does_name_exist($pdo, $edited_user["first_name"], $edited_user["last_name"], $id)
     ) {
         $errors["first_name"] = "first name and last name already in use";
     }
 
-    if (empty($errors["username"]) && empty($errors["first_name"]) && empty($errors["last_name"]) && empty($errors["email"])) {
+    if (mh_errors_is_empty($errors)) {
         $statement = $pdo->prepare("update users set username=:username, first_name=:first_name, last_name=:last_name, email=:email where id=:id");
         $statement->bindValue(":username", $edited_user["username"], PDO::PARAM_STR);
         $statement->bindValue(":first_name", $edited_user["first_name"], PDO::PARAM_STR);
         $statement->bindValue(":last_name", $edited_user["last_name"], PDO::PARAM_STR);
         $statement->bindValue(":email", $edited_user["email"], PDO::PARAM_STR);
         $statement->bindValue(":id", $edited_user["id"], PDO::PARAM_INT);
-        $statement->execute();
 
         mh_request_redirect("/users");
     }
