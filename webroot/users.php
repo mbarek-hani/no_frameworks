@@ -5,6 +5,7 @@ require "../lib/errors.php";
 require "../lib/database.php";
 require "../lib/request.php";
 require "../lib/template.php";
+require "../lib/validate.php";
 
 mh_request_assert_method("GET");
 
