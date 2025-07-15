@@ -5,7 +5,6 @@ require "../lib/errors.php";
 require "../lib/database.php";
 require "../lib/request.php";
 require "../lib/template.php";
-require "../lib/sanitize.php";
 
 mh_request_assert_method("GET");
 
@@ -15,7 +14,7 @@ function mh_render_users(array $users,string $url,string $search_query, int $tot
 
 $page = mh_request_get_int_query_parameter("page", 1, PHP_INT_MAX, 1);
 $size = mh_request_get_int_query_parameter("size", 5, 30, 10);
-$search = mh_sanitize_search_query_username("q");
+$search = mh_validate_search_query_parameter("q");
 
 $pdo = mh_database_get_connection();
 

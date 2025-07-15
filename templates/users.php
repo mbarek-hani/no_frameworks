@@ -31,9 +31,9 @@
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
-                <tr>
-                    <td colspan="5" style="text-align: center;">There is no users.</td>
-                </tr>
+                    <tr>
+                        <td colspan="5" style="text-align: center;">There is no users.</td>
+                    </tr>
                 <?php endif; ?>
             </tbody>
         </table>

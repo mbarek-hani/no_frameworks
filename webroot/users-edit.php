@@ -17,6 +17,12 @@ $id = mh_request_get_int_query_parameter("id", 1, PHP_INT_MAX);
 
 $pdo = mh_database_get_connection();
 
+if (!mh_database_does_user_exist($pdo, $id)) {
+    http_response_code(404);
+    mh_template_render_404();
+    die();
+}
+
 $user = null;
 $errors = [
         "username" => null,
@@ -31,11 +37,6 @@ if (mh_request_is_method("GET")) {
     $statement->bindValue(":id", $id, PDO::PARAM_INT);
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
-    if (!$user) {
-        http_response_code(404);
-        mh_template_render_404();
-        die();
-    }
 }else {
     $edited_user = [
             "id" => $id,
