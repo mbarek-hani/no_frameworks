@@ -13,7 +13,6 @@ $pdo = mh_database_get_connection();
 
 if (!mh_database_does_user_exist($pdo, $id)) {
     mh_request_terminate(400);
-    exit(1);
 }
 
 $statement = $pdo->prepare("delete from users where id=:id");
