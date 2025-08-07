@@ -1,9 +1,17 @@
-    <div class="sidebar">
-        <ul class="sidebar-nav">
-            <li class="header">Access control</li>
-            <li class="active">
-                <a href="/users">Users</a>
-                <a href="/users/add">+</a>
-            </li>
-        </ul>
-    </div>
+<div class="sidebar">
+    <ul class="sidebar-nav">
+        <li class="header">Access control</li>
+        <li <?php echo str_starts_with($url_path, "/users")
+            ? 'class="active"'
+            : ""; ?> >
+            <a href="/users">Users</a>
+            <a href="/users/add">+</a>
+        </li>
+        <li <?php echo str_starts_with($url_path, "/roles")
+            ? 'class="active"'
+            : ""; ?> >
+            <a href="/roles">roles</a>
+            <a href="/roles/add">+</a>
+        </li>
+    </ul>
+</div>
