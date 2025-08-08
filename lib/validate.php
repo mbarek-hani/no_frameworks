@@ -52,3 +52,24 @@ function mh_validate_search_query_parameter(string $parameter): string
     }
     return trim($_GET[$parameter]);
 }
+
+function mh_validate_role_name(
+    string $role_name,
+    string $fieldname,
+): string|null {
+    $msg = null;
+    if (empty($role_name)) {
+        $msg = "$fieldname is required";
+    } elseif (!preg_match("/^[a-zA-Z]{4,31}/", $role_name)) {
+        $msg = "$fieldname should be min 4 max 32 letters";
+    }
+    return $msg;
+}
+
+function mh_validate_role_description(
+    string $role_description,
+    string $fieldname,
+): string|null {
+    // TODO
+    return null;
+}
