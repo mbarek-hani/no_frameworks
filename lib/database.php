@@ -123,16 +123,23 @@ function mh_database_does_name_exist(
     return $statement->fetchColumn(0) == 1;
 }
 
-function mh_database_does_role_name_exist(PDO $pdo, string $role_name): bool
-{
-    // TODO
-    return false;
-}
-
-function mh_database_does_role_description_exist(
+function mh_database_does_role_name_exist(
     PDO $pdo,
-    string $role_description,
+    string $role_name,
+    ?int $id = null,
 ): bool {
-    // TODO
-    return false;
+    if ($id) {
+        $statement = $pdo->prepare(
+            "select count(*) from roles where name=:name and and id<>:id",
+        );
+        $statement->bindValue(":name", $role_name, PDO::PARAM_STR);
+        $statement->bindValue(":id", $id, PDO::PARAM_INT);
+    } else {
+        $statement = $pdo->prepare(
+            "select count(*) from roles where name=:name",
+        );
+        $statement->bindValue(":name", $role_name, PDO::PARAM_STR);
+    }
+    $statement->execute();
+    return $statement->fetchColumn(0) == 1;
 }

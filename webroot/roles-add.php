@@ -12,7 +12,7 @@ mh_request_assert_methods(["GET, POST"]);
 
 function mh_render_roles_add(array $role, array $errors): void
 {
-    require "../templates/role-add.php";
+    require "../templates/roles-add.php";
 }
 
 $pdo = mh_database_get_connection();
@@ -43,16 +43,6 @@ if (mh_request_is_method("POST")) {
         mh_database_does_role_name_exist($pdo, $added_role["name"])
     ) {
         $errors["name"] = "role name already in use";
-    }
-
-    if (
-        $errors["description"] === null &&
-        mh_database_does_role_description_exist(
-            $pdo,
-            $added_role["description"],
-        )
-    ) {
-        $errors["email"] = "role description already in use";
     }
 
     if (mh_errors_is_empty($errors)) {
