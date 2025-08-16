@@ -1,6 +1,8 @@
     <div class="content">
         <form class="search" method="get" action="/users">
-            <input type="text" name="q" placeholder="Search with username ..." value="<?= htmlspecialchars($search_query) ?>"/>
+            <input type="text" name="q" placeholder="Search with username ..." value="<?= htmlspecialchars(
+                $search_query,
+            ) ?>"/>
             <input type="submit" value="search" />
         </form>
         <table>
@@ -10,23 +12,35 @@
                     <th width="20%">username</th>
                     <th width="15%">first name</th>
                     <th width="15%">last name</th>
-                    <th width="30%">email</th>
-                    <th width="15%">actions</th>
+                    <th width="35%">email</th>
+                    <th width="10%">actions</th>
                 </tr>
             </thead>
             <tbody>
-                <?php if (count($users) > 0) : ?>
-                    <?php foreach($users as $user): ?>
+                <?php if (count($users) > 0): ?>
+                    <?php foreach ($users as $user): ?>
                         <tr>
-                            <td><?= $user["id"]; ?></td>
-                            <td><?= $user["username"]; ?></td>
-                            <td><?= $user["first_name"]; ?></td>
-                            <td><?= $user["last_name"]; ?></td>
-                            <td><?= $user["email"]; ?></td>
+                            <td><?= $user["id"] ?></td>
+                            <td><?= $user["username"] ?></td>
+                            <td><?= $user["first_name"] ?></td>
+                            <td><?= $user["last_name"] ?></td>
+                            <td><?= $user["email"] ?></td>
                             <td class="actions">
-                                <a href="/users/edit/<?= htmlspecialchars($user["id"]) ?>">Edit</a>
-                                <form class="deleteForm" id="form<?= htmlspecialchars($user["id"]) ?>" action="/users/delete/<?= htmlspecialchars($user["id"]) ?>" method="POST" style="display: none;"></form>
-                                <button form="form<?= htmlspecialchars($user["id"]) ?>" type="submit">Delete</button>
+                                <a href="/users/edit/<?= htmlspecialchars(
+                                    $user["id"],
+                                ) ?>">
+                                    <img src="/assets/edit.svg" width="30" height="30" />
+                                </a>
+                                <form class="deleteForm" id="form<?= htmlspecialchars(
+                                    $user["id"],
+                                ) ?>" action="/users/delete/<?= htmlspecialchars(
+    $user["id"],
+) ?>" method="POST" style="display: none;"></form>
+                                <button form="form<?= htmlspecialchars(
+                                    $user["id"],
+                                ) ?>" type="submit">
+                                    <img src="assets/delete.svg" width="30" height="30" />
+                                </button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -37,7 +51,13 @@
                 <?php endif; ?>
             </tbody>
         </table>
-        <?php mh_template_render_pager($url, $search_query, $total_pages, $size, $current_page); ?>
+        <?php mh_template_render_pager(
+            $url,
+            $search_query,
+            $total_pages,
+            $size,
+            $current_page,
+        ); ?>
     </div>
     <script>
         const deleteForms = document.querySelectorAll(".deleteForm");

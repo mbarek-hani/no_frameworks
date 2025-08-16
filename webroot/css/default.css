@@ -2,9 +2,9 @@
     --background: #1a1a1a;
     --frground: #e0e6ed;
     --primary: #0078d4;
-    --secondary: #686D76;
-    --danger: #DC2525;
-    --placeholder-color: #D1D8BE;
+    --secondary: #686d76;
+    --danger: #dc2525;
+    --placeholder-color: #d1d8be;
 }
 
 * {
@@ -22,7 +22,9 @@ body {
     color: var(--frground);
     max-width: 1200px;
     margin: 0 auto;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family:
+        "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
     display: flex;
     gap: 30px;
     min-height: 100vh;
@@ -52,7 +54,6 @@ td {
     padding: 8px;
     text-align: left;
 }
-
 
 tr {
     border-bottom: 1px solid var(--primary);
@@ -209,7 +210,6 @@ form.edit a {
     color: var(--frground);
 }
 
-
 /* Enhanced Error Messages */
 .error {
     color: var(--danger);
@@ -224,27 +224,15 @@ form.edit a {
     gap: 8px;
 }
 
+.actions button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
 .actions a,
 .actions button {
-    padding: 8px 16px;
-    border-radius: 6px;
     cursor: pointer;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.actions a {
-    background: var(--primary);
-    color: var(--frground);
-    border: none;
-}
-
-.actions button {
-    background: var(--danger);
-    color: var(--frground);
-    border: none;
 }
 
 /* Enhanced Content Area */
@@ -311,8 +299,8 @@ form.edit a {
 
 @media (prefers-color-scheme: light) {
     :root {
-        --background: #FAF7F3;
+        --background: #faf7f3;
         --frground: #212121;
-        --placeholder-color: #819A91;
+        --placeholder-color: #819a91;
     }
 }
