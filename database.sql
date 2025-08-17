@@ -17,6 +17,47 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `actions`
+--
+
+DROP TABLE IF EXISTS `actions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `actions` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `description` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `actions`
+--
+
+LOCK TABLES `actions` WRITE;
+/*!40000 ALTER TABLE `actions` DISABLE KEYS */;
+INSERT INTO `actions` VALUES
+(1,'CreateUser','Add new user'),
+(2,'ReadUser','Retrieve user information'),
+(3,'UpdateUser','Edit user information'),
+(4,'DeleteUser','Mark user as deleted'),
+(5,'ListUsers','Retrieve list of all users'),
+(6,'CreateRole','Add new role'),
+(7,'ReadRole','Retrieve role information'),
+(8,'UpdateRole','Edit role information'),
+(9,'DeleteRole','Mark role as deleted'),
+(10,'ListRoles','Retrieve list of all roles'),
+(11,'CreateAction','Add new action'),
+(12,'ReadAction','Retrieve action information'),
+(13,'UpdateAction','Edit action information'),
+(14,'DeleteAction','Mark action as deleted'),
+(15,'ListActions','Retrieve list of all actions');
+/*!40000 ALTER TABLE `actions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `roles`
 --
 
@@ -29,7 +70,7 @@ CREATE TABLE `roles` (
   `description` varchar(1024) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +81,8 @@ LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` VALUES
 (1,'Administrator','Administrator role with all permissions'),
-(2,'User','Read only role for regular users');
+(2,'User','Read only role for regular users'),
+(4,'Guest','Login only role');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,9 +113,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(1,'bdanilowicz0','Beckie','Danilowicz','bdanilowicz0@tumblr.com'),
-(2,'bsydry1','Babbie','Sydry','bsydry1@psu.edu'),
-(3,'acrighton2','Ashlen','Crighton','acrighton2@nationalgeographic.com'),
+(3,'acrighton','Ashlen','Crighton','acrighton2@nationalgeographic.com'),
 (4,'fclaibourn3','Frederik','Claibourn','fclaibourn3@goo.ne.jp'),
 (5,'lescale4','Luciano','Escale','lescale4@ft.com'),
 (6,'viking15','Viking','Hani','hani-viking@email.com'),
@@ -180,4 +220,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-08-09 22:38:07
+-- Dump completed on 2025-08-17  2:47:10
