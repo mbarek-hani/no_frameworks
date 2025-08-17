@@ -39,7 +39,7 @@
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="5" style="text-align: center;">There is no roles.</td>
+                    <td colspan="5" style="text-align: center;">There is no actions.</td>
                 </tr>
             <?php endif; ?>
         </tbody>
