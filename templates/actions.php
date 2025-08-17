@@ -1,6 +1,6 @@
 <div class="content">
     <form class="search" method="get" action="/actions">
-        <input type="text" name="q" placeholder="Search with role name..." value="<?= htmlspecialchars(
+        <input type="text" name="q" placeholder="Search with action name..." value="<?= htmlspecialchars(
             $search_query,
         ) ?>"/> <input type="submit" value="search" />
     </form>
