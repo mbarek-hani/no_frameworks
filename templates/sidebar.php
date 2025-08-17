@@ -13,5 +13,11 @@
             <a href="/roles">roles</a>
             <a href="/roles/add">+</a>
         </li>
+        <li <?php echo str_starts_with($url_path, "/actions")
+            ? 'class="active"'
+            : ""; ?> >
+                    <a href="/actions">actions</a>
+                    <a href="/actions/add">+</a>
+                </li>
     </ul>
 </div>
