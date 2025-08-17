@@ -192,3 +192,17 @@ function mh_database_does_action_name_exist(
     $statement->execute();
     return $statement->fetchColumn(0) == 1;
 }
+
+/*
+ * check if an action exists with id
+ * @param $pdo PDO object to connect to db
+ * @param $id id to look for
+ * @return bool true if exists, false if not
+ */
+function mh_database_does_action_exists(PDO $pdo, int $id): bool
+{
+    $statement = $pdo->prepare("select count(*) from actions where id=:id");
+    $statement->bindValue(":id", $id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetchColumn(0) == 1;
+}
