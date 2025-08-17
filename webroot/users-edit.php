@@ -109,6 +109,7 @@ if (mh_request_is_method("GET")) {
         );
         $statement->bindValue(":email", $edited_user["email"], PDO::PARAM_STR);
         $statement->bindValue(":id", $edited_user["id"], PDO::PARAM_INT);
+        $statement->execute();
 
         mh_request_redirect("/users");
     }
