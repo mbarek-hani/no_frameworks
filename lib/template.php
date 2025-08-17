@@ -58,5 +58,8 @@ function mh_template_render_footer(): void
 
 function mh_template_render_404(): void
 {
+    mh_template_render_header("Page not found");
+    mh_template_render_sidebar("");
     require "../templates/404.php";
+    mh_template_render_footer();
 }
