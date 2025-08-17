@@ -76,3 +76,31 @@ function mh_validate_role_description(
     }
     return $msg;
 }
+
+function mh_validate_action_name(
+    string $action_name,
+    string $fieldname,
+): ?string {
+    $msg = null;
+    if (empty($action_name)) {
+        $msg = "$fieldname is required";
+    } elseif (!preg_match("/^[a-zA-Z]{4,31}$/", $action_name)) {
+        $msg = "$fieldname should be min 4 max 32 letters";
+    }
+    return $msg;
+}
+
+function mh_validate_action_description(
+    string $action_description,
+    string $fieldname,
+): ?string {
+    $msg = null;
+    if (empty($action_description)) {
+        $msg = "$fieldname is required";
+    } elseif (
+        !preg_match("/^[a-zA-Z ;.,!:?]{10,1024}$/", $action_description)
+    ) {
+        $msg = "$fieldname length should be between 10 and 1024 letters";
+    }
+    return $msg;
+}
