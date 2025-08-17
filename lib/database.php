@@ -123,6 +123,13 @@ function mh_database_does_name_exist(
     return $statement->fetchColumn(0) == 1;
 }
 
+/*
+ * check if a role exists with name
+ * @param $pdo PDO object to connect to db
+ * @param $role_name name to look for
+ * @param $id if passed, the check will be done on every role that have a different id
+ * @return bool true if exists, false if not
+ */
 function mh_database_does_role_name_exist(
     PDO $pdo,
     string $role_name,
@@ -130,7 +137,7 @@ function mh_database_does_role_name_exist(
 ): bool {
     if ($id) {
         $statement = $pdo->prepare(
-            "select count(*) from roles where name=:name and and id<>:id",
+            "select count(*) from roles where name=:name and id<>:id",
         );
         $statement->bindValue(":name", $role_name, PDO::PARAM_STR);
         $statement->bindValue(":id", $id, PDO::PARAM_INT);
@@ -140,6 +147,20 @@ function mh_database_does_role_name_exist(
         );
         $statement->bindValue(":name", $role_name, PDO::PARAM_STR);
     }
+    $statement->execute();
+    return $statement->fetchColumn(0) == 1;
+}
+
+/*
+ * check if a role exists with id
+ * @param $pdo PDO object to connect to db
+ * @param $id id to look for
+ * @return bool true if exists, false if not
+ */
+function mh_database_does_role_exists(PDO $pdo, int $id): bool
+{
+    $statement = $pdo->prepare("select count(*) from roles where id=:id");
+    $statement->bindValue(":id", $id, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetchColumn(0) == 1;
 }
