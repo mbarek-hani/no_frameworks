@@ -22,14 +22,15 @@ function mh_database_get_connection(): PDO
 }
 
 /*
- * check if a user exists with id
+ * check if a row exists with id in a specific table
  * @param $pdo PDO object to connect to db
+ * @param $table string table to look in
  * @param $id id to look for
  * @return bool true if exists, false if not
  */
-function mh_database_does_user_exist(PDO $pdo, int $id): bool
+function mh_database_does_row_exist(PDO $pdo, string $table, int $id): bool
 {
-    $statement = $pdo->prepare("select count(*) from users where id=:id");
+    $statement = $pdo->prepare("select count(*) from $table where id=:id");
     $statement->bindValue(":id", $id, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetchColumn(0) == 1;
@@ -152,20 +153,6 @@ function mh_database_does_role_name_exist(
 }
 
 /*
- * check if a role exists with id
- * @param $pdo PDO object to connect to db
- * @param $id id to look for
- * @return bool true if exists, false if not
- */
-function mh_database_does_role_exists(PDO $pdo, int $id): bool
-{
-    $statement = $pdo->prepare("select count(*) from roles where id=:id");
-    $statement->bindValue(":id", $id, PDO::PARAM_INT);
-    $statement->execute();
-    return $statement->fetchColumn(0) == 1;
-}
-
-/*
  * check if an action exists with name
  * @param $pdo PDO object to connect to db
  * @param $action_name name to look for
@@ -189,20 +176,6 @@ function mh_database_does_action_name_exist(
         );
         $statement->bindValue(":name", $action_name, PDO::PARAM_STR);
     }
-    $statement->execute();
-    return $statement->fetchColumn(0) == 1;
-}
-
-/*
- * check if an action exists with id
- * @param $pdo PDO object to connect to db
- * @param $id id to look for
- * @return bool true if exists, false if not
- */
-function mh_database_does_action_exists(PDO $pdo, int $id): bool
-{
-    $statement = $pdo->prepare("select count(*) from actions where id=:id");
-    $statement->bindValue(":id", $id, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetchColumn(0) == 1;
 }

@@ -12,7 +12,7 @@ $id = mh_request_get_int_query_parameter("id", 1, PHP_INT_MAX);
 
 $pdo = mh_database_get_connection();
 
-if (!mh_database_does_action_exists($pdo, $id)) {
+if (!mh_database_does_row_exist($pdo, "actions", $id)) {
     http_response_code(400);
     mh_template_render_404();
     die();

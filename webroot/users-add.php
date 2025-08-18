@@ -53,22 +53,22 @@ if (mh_request_is_method("POST")) {
     $errors["email"] = mh_validate_email($added_user["email"], "email");
 
     if (
-        is_null($errors["username"]) &&
+        $errors["username"] === null &&
         mh_database_does_username_exist($pdo, $added_user["username"])
     ) {
         $errors["username"] = "username already in use";
     }
 
     if (
-        is_null($errors["email"]) &&
+        $errors["email"] === null &&
         mh_database_does_email_exist($pdo, $added_user["email"])
     ) {
         $errors["email"] = "email already in use";
     }
 
     if (
-        is_null($errors["first_name"]) &&
-        is_null($errors["last_name"]) &&
+        $errors["first_name"] === null &&
+        $errors["last_name"] === null &&
         mh_database_does_name_exist(
             $pdo,
             $added_user["first_name"],
