@@ -9,7 +9,7 @@ require "../lib/template.php";
 
 mh_request_assert_methods(["GET, POST"]);
 
-function mh_render_users_edit(array $user, array $errors): void
+function mh_render_users_edit(array $user, array $roles, array $errors): void
 {
     require "../templates/users-edit.php";
 }
@@ -32,12 +32,22 @@ $errors = [
     "email" => null,
 ];
 $edited_user = null;
+$roles = [];
 
 if (mh_request_is_method("GET")) {
     $statement = $pdo->prepare("select * from users where id = :id");
     $statement->bindValue(":id", $id, PDO::PARAM_INT);
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+    $statement = $pdo->prepare(
+        "select id, name, description from roles, users_roles where role_id = id and user_id = :id",
+    );
+    $statement->bindValue(":id", $id, PDO::PARAM_INT);
+    $statement->execute();
+    $roles = mh_template_escape_array_of_arrays(
+        $statement->fetchAll(PDO::FETCH_ASSOC),
+    );
 } else {
     $edited_user = [
         "id" => $id,
@@ -119,5 +129,5 @@ $data = mh_template_escape_array($user ?? $edited_user);
 
 mh_template_render_header("Edit user");
 mh_template_render_sidebar("/users/edit");
-mh_render_users_edit($data, $errors);
+mh_render_users_edit($data, $roles, $errors);
 mh_template_render_footer();
