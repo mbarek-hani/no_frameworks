@@ -1,39 +1,29 @@
 <div class="content">
-    <form class="edit" method="POST" action="/users/edit/<?= htmlspecialchars(
-        $user["id"],
-    ) ?>">
+    <form class="edit" method="POST" action="/users/edit/<?= $user["id"] ?>">
         <div>
             <label for="username">Username</label>
-            <input type="text" name="username" placeholder="username" value="<?= htmlspecialchars(
-                $user["username"],
-            ) ?>"/>
+            <input type="text" name="username" placeholder="username" value="<?= $user["username"] ?>"/>
         </div>
         <?php if (isset($errors["username"])): ?>
             <p class="error"><?= $errors["username"] ?></p>
         <?php endif; ?>
         <div>
             <label for="firstname">First name</label>
-            <input type="text" name="first_name" placeholder="firstname" value="<?= htmlspecialchars(
-                $user["first_name"],
-            ) ?>"/>
+            <input type="text" name="first_name" placeholder="firstname" value="<?= $user["first_name"] ?>"/>
         </div>
         <?php if (isset($errors["first_name"])): ?>
             <p class="error"><?= $errors["first_name"] ?></p>
         <?php endif; ?>
         <div>
             <label for="lastname">Last name</label>
-            <input type="text" name="last_name" placeholder="lastname" value="<?= htmlspecialchars(
-                $user["last_name"],
-            ) ?>"/>
+            <input type="text" name="last_name" placeholder="lastname" value="<?= $user["last_name"] ?>"/>
         </div>
         <?php if (isset($errors["last_name"])): ?>
             <p class="error"><?= $errors["last_name"] ?></p>
         <?php endif; ?>
         <div>
             <label for="email">Email</label>
-            <input type="text" name="email" placeholder="email" value="<?= htmlspecialchars(
-                $user["email"],
-            ) ?>"/>
+            <input type="text" name="email" placeholder="email" value="<?= $user["email" ?>"/>
         </div>
         <?php if (isset($errors["email"])): ?>
             <p class="error"><?= $errors["email"] ?></p>
@@ -74,7 +64,7 @@
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="4" style="text-align: center;">There is no roles associated with user "<?= $user[
+                    <td colspan="4" style="text-align: center;">There are no roles associated with user "<?= $user[
                         "username"
                     ] ?>".</td>
                 </tr>
