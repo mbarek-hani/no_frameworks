@@ -2,28 +2,36 @@
     <form class="edit" method="POST" action="/users/edit/<?= $user["id"] ?>">
         <div>
             <label for="username">Username</label>
-            <input type="text" name="username" placeholder="username" value="<?= $user["username"] ?>"/>
+            <input type="text" name="username" placeholder="username" value="<?= $user[
+                "username"
+            ] ?>"/>
         </div>
         <?php if (isset($errors["username"])): ?>
             <p class="error"><?= $errors["username"] ?></p>
         <?php endif; ?>
         <div>
             <label for="firstname">First name</label>
-            <input type="text" name="first_name" placeholder="firstname" value="<?= $user["first_name"] ?>"/>
+            <input type="text" name="first_name" placeholder="firstname" value="<?= $user[
+                "first_name"
+            ] ?>"/>
         </div>
         <?php if (isset($errors["first_name"])): ?>
             <p class="error"><?= $errors["first_name"] ?></p>
         <?php endif; ?>
         <div>
             <label for="lastname">Last name</label>
-            <input type="text" name="last_name" placeholder="lastname" value="<?= $user["last_name"] ?>"/>
+            <input type="text" name="last_name" placeholder="lastname" value="<?= $user[
+                "last_name"
+            ] ?>"/>
         </div>
         <?php if (isset($errors["last_name"])): ?>
             <p class="error"><?= $errors["last_name"] ?></p>
         <?php endif; ?>
         <div>
             <label for="email">Email</label>
-            <input type="text" name="email" placeholder="email" value="<?= $user["email" ?>"/>
+            <input type="text" name="email" placeholder="email" value="<?= $user[
+                "email"
+            ] ?>"/>
         </div>
         <?php if (isset($errors["email"])): ?>
             <p class="error"><?= $errors["email"] ?></p>
@@ -44,18 +52,13 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (count($roles) > 0): ?>
-                <?php foreach ($roles as $role): ?>
+            <?php if (count($user_roles) > 0): ?>
+                <?php foreach ($user_roles as $role): ?>
                     <tr>
                         <td><?= $role["id"] ?></td>
                         <td><?= $role["name"] ?></td>
                         <td><?= $role["description"] ?></td>
                         <td class="actions">
-                            <!-- <form id="form<?= $role[
-                                "id"
-                            ] ?>" action="/roles/delete/<?= $role[
-    "id"
-] ?>" method="POST" style="display: none;"></form> -->
                             <button type="submit">
                                 <img src="/assets/delete.svg" width="30" height="30" />
                             </button>
@@ -71,4 +74,26 @@
             <?php endif; ?>
         </tbody>
     </table>
+    <form class="add-role" method="POST" action="/users/edit/<?= $user[
+        "id"
+    ] ?>">
+        <div>
+            <label for="role">Role</label>
+                <?php if (count($other_roles) > 0): ?>
+                    <select id="role" name="role">
+                        <?php foreach ($other_roles as $role): ?>
+                            <option value="<?= $role["id"] ?>"><?= $role[
+    "name"
+] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <input type="submit" value="Add" />
+                <?php else: ?>
+                    <select id="role" disabled>
+                        <option>No roles found.</option>
+                    </select>
+                    <input type="submit" value="Add" disabled/>
+                <?php endif; ?>
+        </div>
+    </form>
 </div>

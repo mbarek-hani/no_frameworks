@@ -9,8 +9,12 @@ require "../lib/template.php";
 
 mh_request_assert_methods(["GET, POST"]);
 
-function mh_render_users_edit(array $user, array $roles, array $errors): void
-{
+function mh_render_users_edit(
+    array $user,
+    array $user_roles,
+    array $other_roles,
+    array $errors,
+): void {
     require "../templates/users-edit.php";
 }
 
@@ -32,7 +36,8 @@ $errors = [
     "email" => null,
 ];
 $edited_user = null;
-$roles = [];
+$user_roles = [];
+$other_roles = [];
 
 if (mh_request_is_method("GET")) {
     $statement = $pdo->prepare("select * from users where id = :id");
@@ -45,7 +50,16 @@ if (mh_request_is_method("GET")) {
     );
     $statement->bindValue(":id", $id, PDO::PARAM_INT);
     $statement->execute();
-    $roles = mh_template_escape_array_of_arrays(
+    $user_roles = mh_template_escape_array_of_arrays(
+        $statement->fetchAll(PDO::FETCH_ASSOC),
+    );
+
+    $statement = $pdo->prepare(
+        "select id, name, description from roles where id not in (select role_id from users_roles where user_id = :id)",
+    );
+    $statement->bindValue(":id", $id, PDO::PARAM_INT);
+    $statement->execute();
+    $other_roles = mh_template_escape_array_of_arrays(
         $statement->fetchAll(PDO::FETCH_ASSOC),
     );
 } else {
@@ -72,22 +86,22 @@ if (mh_request_is_method("GET")) {
     $errors["email"] = mh_validate_email($edited_user["email"], "email");
 
     if (
-        is_null($errors["username"]) &&
+        $errors["username"] === null &&
         mh_database_does_username_exist($pdo, $edited_user["username"], $id)
     ) {
         $errors["username"] = "username already in use";
     }
 
     if (
-        is_null($errors["email"]) &&
+        $errors["email"] === null &&
         mh_database_does_email_exist($pdo, $edited_user["email"], $id)
     ) {
         $errors["email"] = "email already in use";
     }
 
     if (
-        is_null($errors["first_name"]) &&
-        is_null($errors["last_name"]) &&
+        $errors["first_name"] === null &&
+        $errors["last_name"] === null &&
         mh_database_does_name_exist(
             $pdo,
             $edited_user["first_name"],
@@ -129,5 +143,5 @@ $data = mh_template_escape_array($user ?? $edited_user);
 
 mh_template_render_header("Edit user");
 mh_template_render_sidebar("/users/edit");
-mh_render_users_edit($data, $roles, $errors);
+mh_render_users_edit($data, $user_roles, $other_roles, $errors);
 mh_template_render_footer();
