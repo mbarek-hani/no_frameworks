@@ -14,7 +14,7 @@ function mh_render_roles_edit(array $role, array $errors): void
     require "../templates/roles-edit.php";
 }
 
-$id = mh_request_get_int_query_parameter("id", 1, PHP_INT_MAX);
+$id = mh_request_get_int_parameter("id", INPUT_GET, 1, PHP_INT_MAX);
 
 $pdo = mh_database_get_connection();
 

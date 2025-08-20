@@ -20,8 +20,8 @@ function mh_render_actions(
     require "../templates/actions.php";
 }
 
-$page = mh_request_get_int_query_parameter("page", 1, PHP_INT_MAX, 1);
-$size = mh_request_get_int_query_parameter("size", 5, 30, 10);
+$page = mh_request_get_int_parameter("page", INPUT_GET, 1, PHP_INT_MAX, 1);
+$size = mh_request_get_int_parameter("size", INPUT_GET, 5, 30, 10);
 $search = mh_validate_search_query_parameter("q");
 
 $pdo = mh_database_get_connection();

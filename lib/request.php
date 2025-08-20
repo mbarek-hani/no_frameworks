@@ -44,20 +44,22 @@ function mh_request_assert_methods(array $methods): void
 }
 
 /*
- * validate a GET parameter to be an integer in the range of a given min and max and return it or a default if this parameter doesn't exist, otherwise terminate request with a status of 400 BAD REQUEST
- * @param $parameter the GET parameter to validate
- * @param $min the minimum integer the GET parameter has to be to pass validation
- * @param $max the maximum integer the GET parameter has to be to pass validation
- * @param $default the integer to return (if it is provided) if the GET parameter doesn't exist at all
- * @return int the GET paramter value if it has passed validation or $default if provided
+ * validate an input (GET or POST) parameter to be an integer in the range of a given min and max and return it or a default if this parameter doesn't exist, otherwise terminate request with a status of 400 BAD REQUEST
+ * @param $parameter the input parameter to validate
+ * @param $input the input (either INPUT_GET or INPUT_POST) to look for parameter in
+ * @param $min the minimum integer the parameter has to be to pass validation
+ * @param $max the maximum integer the parameter has to be to pass validation
+ * @param $default the integer to return (if it is provided) if the parameter doesn't exist at all
+ * @return int the paramter value if it has passed validation or $default if provided
  */
-function mh_request_get_int_query_parameter(
+function mh_request_get_int_parameter(
     string $parameter,
+    int $input,
     int $min,
     int $max,
     ?int $default = null,
 ): int {
-    $value = filter_input(INPUT_GET, $parameter, FILTER_VALIDATE_INT, [
+    $value = filter_input($input, $parameter, FILTER_VALIDATE_INT, [
         "options" => ["min_range" => $min, "max_range" => $max],
         "flags" => FILTER_NULL_ON_FAILURE,
     ]);

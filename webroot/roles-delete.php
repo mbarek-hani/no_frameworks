@@ -8,7 +8,7 @@ require "../lib/template.php";
 
 mh_request_assert_method("POST");
 
-$id = mh_request_get_int_query_parameter("id", 1, PHP_INT_MAX);
+$id = mh_request_get_int_parameter("id", INPUT_GET, 1, PHP_INT_MAX);
 
 $pdo = mh_database_get_connection();
 
