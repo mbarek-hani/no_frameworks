@@ -89,7 +89,7 @@
                     </select>
                     <input type="submit" value="Add" />
                 <?php else: ?>
-                    <select id="role" disabled>
+                    <select disabled>
                         <option>No roles found.</option>
                     </select>
                     <input type="submit" value="Add" disabled/>
