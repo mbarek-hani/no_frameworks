@@ -76,13 +76,29 @@ if (mh_request_is_method("GET")) {
             mh_template_render_404();
             die();
         }
-        $statement = $pdo->prepare(
-            "insert into users_roles values(:user_id, :role_id)",
-        );
-        $statement->bindValue(":user_id", $user_id, PDO::PARAM_INT);
-        $statement->bindValue(":role_id", $new_role_id, PDO::PARAM_INT);
-        $statement->execute();
-        mh_request_redirect("/users/edit/$user_id");
+        $action = $_POST["action"] ?? "";
+        switch ($action) {
+            case "add":
+                $statement = $pdo->prepare(
+                    "insert into users_roles values(:user_id, :role_id)",
+                );
+                $statement->bindValue(":user_id", $user_id, PDO::PARAM_INT);
+                $statement->bindValue(":role_id", $new_role_id, PDO::PARAM_INT);
+                $statement->execute();
+                mh_request_redirect("/users/edit/$user_id");
+                break;
+            case "remove":
+                $statement = $pdo->prepare(
+                    "delete from users_roles where user_id=:user_id and role_id=:role_id",
+                );
+                $statement->bindValue(":user_id", $user_id, PDO::PARAM_INT);
+                $statement->bindValue(":role_id", $new_role_id, PDO::PARAM_INT);
+                $statement->execute();
+                mh_request_redirect("/users/edit/$user_id");
+                break;
+            default:
+                mh_request_terminate(400);
+        }
     } else {
         $edited_user = [
             "id" => $user_id,

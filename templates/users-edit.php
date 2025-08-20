@@ -59,7 +59,17 @@
                         <td><?= $role["name"] ?></td>
                         <td><?= $role["description"] ?></td>
                         <td class="actions">
-                            <button type="submit">
+                            <form class="removeForm" action="/users/edit/<?= $user[
+                                "id"
+                            ] ?>" method="POST" id="form<?= $role[
+    "id"
+] ?>" style="display: none;">
+                                <input type="hidden" name="action" value="remove" />
+                                <input type="hidden" name="role" value="<?= $role[
+                                    "id"
+                                ] ?>" />
+                            </form>
+                            <button type="submit" form="form<?= $role["id"] ?>">
                                 <img src="/assets/delete.svg" width="30" height="30" />
                             </button>
                         </td>
@@ -77,6 +87,7 @@
     <form class="add-role" method="POST" action="/users/edit/<?= $user[
         "id"
     ] ?>">
+        <input type="hidden" name="action" value="add" />
         <div>
             <label for="role">Role</label>
                 <?php if (count($other_roles) > 0): ?>
@@ -97,3 +108,15 @@
         </div>
     </form>
 </div>
+<script>
+    const removeForms = document.querySelectorAll(".removeForm");
+    for (let i = 0; i<removeForms.length; i++) {
+        removeForms[i].addEventListener("submit", (e) => {
+            if(!confirm("Are you sure you want to remove this role from user \"<?= $user[
+                "username"
+            ] ?>\"?")) {
+                e.preventDefault();
+            }
+        });
+    }
+</script>
