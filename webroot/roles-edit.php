@@ -9,8 +9,12 @@ require "../lib/template.php";
 
 mh_request_assert_methods(["GET, POST"]);
 
-function mh_render_roles_edit(array $role, array $errors): void
-{
+function mh_render_roles_edit(
+    array $role,
+    array $role_actions,
+    array $other_actions,
+    array $errors,
+): void {
     require "../templates/roles-edit.php";
 }
 
@@ -76,5 +80,5 @@ $data = mh_template_escape_array($role ?? $edited_role);
 
 mh_template_render_header("Edit role");
 mh_template_render_sidebar("/roles/edit");
-mh_render_roles_edit($data, $errors);
+mh_render_roles_edit($data, [], [], $errors);
 mh_template_render_footer();
