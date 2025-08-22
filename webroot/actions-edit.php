@@ -51,7 +51,13 @@ if (mh_request_is_method("GET")) {
 
     if (
         $errors["name"] === null &&
-        mh_database_does_action_name_exist($pdo, $edited_action["name"], $id)
+        !mh_database_is_unique_column_value(
+            $pdo,
+            "actions",
+            "name",
+            $edited_action["name"],
+            $id,
+        )
     ) {
         $errors["name"] = "name already in use";
     }

@@ -40,7 +40,12 @@ if (mh_request_is_method("POST")) {
 
     if (
         $errors["name"] === null &&
-        mh_database_does_role_name_exist($pdo, $added_role["name"])
+        !mh_database_is_unique_column_value(
+            $pdo,
+            "roles",
+            "name",
+            $added_role["name"],
+        )
     ) {
         $errors["name"] = "role name already in use";
     }

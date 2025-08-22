@@ -40,7 +40,12 @@ if (mh_request_is_method("POST")) {
 
     if (
         $errors["name"] === null &&
-        mh_database_does_action_name_exist($pdo, $added_action["name"])
+        !mh_database_is_unique_column_value(
+            $pdo,
+            "actions",
+            "name",
+            $added_action["name"],
+        )
     ) {
         $errors["name"] = "action name already in use";
     }

@@ -54,14 +54,24 @@ if (mh_request_is_method("POST")) {
 
     if (
         $errors["username"] === null &&
-        mh_database_does_username_exist($pdo, $added_user["username"])
+        !mh_database_is_unique_column_value(
+            $pdo,
+            "users",
+            "username",
+            $added_user["username"],
+        )
     ) {
         $errors["username"] = "username already in use";
     }
 
     if (
         $errors["email"] === null &&
-        mh_database_does_email_exist($pdo, $added_user["email"])
+        !mh_database_is_unique_column_value(
+            $pdo,
+            "users",
+            "email",
+            $added_user["email"],
+        )
     ) {
         $errors["email"] = "email already in use";
     }

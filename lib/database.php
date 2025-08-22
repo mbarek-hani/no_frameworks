@@ -37,6 +37,47 @@ function mh_database_does_row_exist(PDO $pdo, string $table, int $id): bool
 }
 
 /*
+ * check if a value is unique in a specific column of a specific table.
+ * @param $pdo PDO object to connect to db
+ * @param $table_name the table name
+ * @param $column_name the column name to check
+ * @param $column_value the column value
+ * @param $id if passed, the check will be done on every row that have a  primary key different than it
+ * @return bool true if it is unique, false if not
+ */
+function mh_database_is_unique_column_value(
+    PDO $pdo,
+    string $table_name,
+    string $column_name,
+    mixed $column_value,
+    ?int $id = null,
+): bool {
+    $type = match (gettype($column_value)) {
+        "string" => PDO::PARAM_STR,
+        "integer" => PDO::PARAM_INT,
+        "boolean" => PDO::PARAM_BOOL,
+        default => trigger_error(
+            "got an unexpected type of \$column_value",
+            E_USER_ERROR,
+        ),
+    };
+    if ($id) {
+        $statement = $pdo->prepare(
+            "select count(*) from $table_name where $column_name=:value and id<>:id",
+        );
+        $statement->bindValue(":value", $column_value, $type);
+        $statement->bindValue(":id", $id, PDO::PARAM_INT);
+    } else {
+        $statement = $pdo->prepare(
+            "select count(*) from $table_name where $column_name=:value",
+        );
+        $statement->bindValue(":value", $column_value, $type);
+    }
+    $statement->execute();
+    return $statement->fetchColumn(0) == 0;
+}
+
+/*
  * check if a user exists with username
  * @param $pdo PDO object to connect to db
  * @param $username username to look for

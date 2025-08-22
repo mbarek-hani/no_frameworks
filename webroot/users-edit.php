@@ -124,8 +124,10 @@ if (mh_request_is_method("GET")) {
 
         if (
             $errors["username"] === null &&
-            mh_database_does_username_exist(
+            !mh_database_is_unique_column_value(
                 $pdo,
+                "users",
+                "username",
                 $edited_user["username"],
                 $user_id,
             )
@@ -135,7 +137,13 @@ if (mh_request_is_method("GET")) {
 
         if (
             $errors["email"] === null &&
-            mh_database_does_email_exist($pdo, $edited_user["email"], $user_id)
+            !mh_database_is_unique_column_value(
+                $pdo,
+                "users",
+                "email",
+                $edited_user["email"],
+                $user_id,
+            )
         ) {
             $errors["email"] = "email already in use";
         }

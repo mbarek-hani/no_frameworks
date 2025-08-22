@@ -112,8 +112,10 @@ if (mh_request_is_method("GET")) {
 
         if (
             $errors["name"] === null &&
-            mh_database_does_role_name_exist(
+            !mh_database_is_unique_column_value(
                 $pdo,
+                "roles",
+                "name",
                 $edited_role["name"],
                 $role_id,
             )
