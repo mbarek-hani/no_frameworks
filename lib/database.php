@@ -5,7 +5,7 @@ require_once "dotenv.php";
 
 /*
  * get database connection as a PDO object
- * @return bool true if exists, false if not
+ * @return PDO
  * @throws PDOException
  */
 function mh_database_get_connection(): PDO
