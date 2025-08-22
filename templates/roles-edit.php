@@ -92,3 +92,15 @@
         </div>
     </form>
 </div>
+<script>
+    const removeForms = document.querySelectorAll(".removeForm");
+    for (let i = 0; i<removeForms.length; i++) {
+        removeForms[i].addEventListener("submit", (e) => {
+            if(!confirm("Are you sure you want to remove this action from role \"<?= $role[
+                "name"
+            ] ?>\"?")) {
+                e.preventDefault();
+            }
+        });
+    }
+</script>
