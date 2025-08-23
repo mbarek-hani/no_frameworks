@@ -28,14 +28,14 @@ function mh_request_assert_method(string $method): void
 }
 
 /*
- * insure the request is made with a either one of the given methods otherwise terminate it with 405 METHOD NOT ALLOWED and set the allow header
+ * insure the request is made with either one of the given methods otherwise terminate it with 405 METHOD NOT ALLOWED and set the allow header
  * @param $methods the methods to allow
  */
 function mh_request_assert_methods(array $methods): void
 {
     if (
         !isset($_SERVER["REQUEST_METHOD"]) ||
-        in_array($_SERVER["REQUEST_METHOD"], haystack: $methods)
+        in_array($_SERVER["REQUEST_METHOD"], $methods)
     ) {
         http_response_code(405);
         header("Allow: " . implode(", ", $methods));
