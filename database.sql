@@ -70,7 +70,7 @@ CREATE TABLE `roles` (
   `description` varchar(1024) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -80,10 +80,57 @@ CREATE TABLE `roles` (
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` VALUES
-(1,'Administrator','Administrator role with all permissions'),
-(2,'User','Read only role for regular users'),
-(4,'Guest','Login only role');
+(1,'Administrator','Full permissions'),
+(5,'Readonly','Read only permissions');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roles_actions`
+--
+
+DROP TABLE IF EXISTS `roles_actions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `roles_actions` (
+  `role_id` bigint(20) unsigned NOT NULL,
+  `action_id` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`role_id`,`action_id`),
+  KEY `action_id` (`action_id`),
+  CONSTRAINT `roles_actions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `roles_actions_ibfk_2` FOREIGN KEY (`action_id`) REFERENCES `actions` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roles_actions`
+--
+
+LOCK TABLES `roles_actions` WRITE;
+/*!40000 ALTER TABLE `roles_actions` DISABLE KEYS */;
+INSERT INTO `roles_actions` VALUES
+(1,1),
+(1,2),
+(1,3),
+(1,4),
+(1,5),
+(1,6),
+(1,7),
+(1,8),
+(1,9),
+(1,10),
+(1,11),
+(1,12),
+(1,13),
+(1,14),
+(1,15),
+(5,2),
+(5,5),
+(5,7),
+(5,10),
+(5,12),
+(5,15);
+/*!40000 ALTER TABLE `roles_actions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -113,9 +160,9 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(3,'acrighton','Ashlen','Crighton','acrighton2@nationalgeographic.com'),
+(3,'admin','mbarek','hani','mbarekhani30@gmail.com'),
 (4,'fclaibourn3','Frederik','Claibourn','fclaibourn3@goo.ne.jp'),
-(5,'lescale4','Luciano','Escale','lescale4@ft.com'),
+(5,'pascal','Luciano','Escale','lescale4@ft.com'),
 (6,'viking15','Viking','Hani','hani-viking@email.com'),
 (8,'kmorris7','Kain','Morris','kmorris7@kickstarter.com'),
 (9,'mianetti8','Mellisa','Ianetti','mianetti8@answers.com'),
@@ -222,9 +269,9 @@ CREATE TABLE `users_roles` (
   `user_id` int(10) unsigned NOT NULL,
   `role_id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`user_id`,`role_id`),
-  KEY `role_id` (`role_id`),
-  CONSTRAINT `users_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `users_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+  KEY `users_roles_ibfk_2` (`role_id`),
+  CONSTRAINT `users_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `users_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -234,6 +281,9 @@ CREATE TABLE `users_roles` (
 
 LOCK TABLES `users_roles` WRITE;
 /*!40000 ALTER TABLE `users_roles` DISABLE KEYS */;
+INSERT INTO `users_roles` VALUES
+(3,1),
+(4,5);
 /*!40000 ALTER TABLE `users_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -246,4 +296,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-08-18  2:30:50
+-- Dump completed on 2025-08-23  9:28:45
