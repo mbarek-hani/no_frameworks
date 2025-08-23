@@ -35,7 +35,7 @@ function mh_request_assert_methods(array $methods): void
 {
     if (
         !isset($_SERVER["REQUEST_METHOD"]) ||
-        in_array($_SERVER["REQUEST_METHOD"], $methods)
+        !in_array($_SERVER["REQUEST_METHOD"], $methods)
     ) {
         http_response_code(405);
         header("Allow: " . implode(", ", $methods));

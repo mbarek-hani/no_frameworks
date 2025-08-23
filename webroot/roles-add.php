@@ -8,7 +8,7 @@ require "../lib/database.php";
 require "../lib/validate.php";
 require "../lib/template.php";
 
-mh_request_assert_methods(["GET, POST"]);
+mh_request_assert_methods(["GET", "POST"]);
 
 function mh_render_roles_add(array $role, array $errors): void
 {
