@@ -36,9 +36,9 @@ body {
 
 /* login form container */
 .login {
-    width: 50%;
-    max-width: 500px;
-    min-width: 400px;
+    width: 400;
+    max-width: 400px;
+    min-width: 350px;
     margin: auto;
 }
 /* Modern Table Styling */
@@ -324,7 +324,6 @@ form.edit a {
 
 .sidebar-nav li {
     display: flex;
-    gap: 2;
 }
 
 .sidebar-nav li a:first-child {
@@ -340,17 +339,13 @@ form.edit a {
 
 .sidebar-nav a {
     text-decoration: none;
-    padding: 12px 16px;
+    padding: 8px;
     border-radius: 8px;
     transition: all 0.3s ease;
     font-weight: 600;
     background-color: var(--background);
     color: var(--frground);
     border: 2px solid transparent;
-}
-
-.sidebar-nav a:hover {
-    border-color: var(--primary);
 }
 
 .sidebar-nav .active a {
