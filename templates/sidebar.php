@@ -18,6 +18,12 @@
             : ""; ?> >
                     <a href="/actions">actions</a>
                     <a href="/actions/add">+</a>
-                </li>
+        </li>
+        <li class="header">Session</li>
+        <li>
+            <form action="/logout" method="POST" style="display: none;" id="logoutForm">
+            </form>
+            <button type="submit" form="logoutForm">Logout</button>
+        </li>
     </ul>
 </div>
