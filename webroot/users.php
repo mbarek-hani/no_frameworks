@@ -39,7 +39,7 @@ if ($total_pages > 0 && $page > $total_pages) {
 }
 
 $statement = $pdo->prepare(
-    "select * from users where username like :search limit :offset, :limit",
+    "select id, username, first_name, last_name, email from users where username like :search limit :offset, :limit",
 );
 $statement->bindValue(":offset", ($page - 1) * $size, PDO::PARAM_INT);
 $statement->bindValue(":limit", $size, PDO::PARAM_INT);

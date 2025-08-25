@@ -40,7 +40,9 @@ $user_roles = [];
 $other_roles = [];
 
 if (mh_request_is_method("GET")) {
-    $statement = $pdo->prepare("select * from users where id = :id");
+    $statement = $pdo->prepare(
+        "select id, username, first_name, last_name, email from users where id = :id",
+    );
     $statement->bindValue(":id", $user_id, PDO::PARAM_INT);
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
