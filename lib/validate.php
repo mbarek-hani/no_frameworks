@@ -104,3 +104,25 @@ function mh_validate_action_description(
     }
     return $msg;
 }
+
+function mh_validate_login_username(
+    string $username,
+    string $fieldname,
+): ?string {
+    $msg = null;
+    if (empty($username)) {
+        $msg = "$fieldname is required";
+    }
+    return $msg;
+}
+
+function mh_validate_login_password(
+    string $password,
+    string $fieldname,
+): ?string {
+    $msg = null;
+    if (empty($password)) {
+        $msg = "$fieldname is required";
+    }
+    return $msg;
+}
