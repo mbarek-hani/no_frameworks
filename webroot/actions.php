@@ -1,13 +1,16 @@
 <?php
 declare(strict_types=1);
 
-require "../lib/errors.php";
-require "../lib/database.php";
-require "../lib/request.php";
-require "../lib/template.php";
-require "../lib/validate.php";
+require_once "../lib/errors.php";
+require_once "../lib/authentication.php";
+require_once "../lib/database.php";
+require_once "../lib/request.php";
+require_once "../lib/template.php";
+require_once "../lib/validate.php";
 
 mh_request_assert_method("GET");
+
+$logged_in_user = mh_authentication_require_login();
 
 function mh_render_actions(
     array $actions,
