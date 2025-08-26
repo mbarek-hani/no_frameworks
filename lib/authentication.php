@@ -11,7 +11,7 @@ session_start();
  */
 function mh_authentication_require_login(): int
 {
-    if (!isset($_SESSION["user_id"])) {
+    if (!mh_authentication_is_user_logged_in()) {
         mh_request_redirect("/login");
     }
 
@@ -24,7 +24,12 @@ function mh_authentication_require_login(): int
  */
 function mh_authentication_require_logout()
 {
-    if (isset($_SESSION["user_id"])) {
+    if (mh_authentication_is_user_logged_in()) {
         mh_request_redirect("/users");
     }
+}
+
+function mh_authentication_is_user_logged_in(): bool
+{
+    return isset($_SESSION["user_id"]);
 }
