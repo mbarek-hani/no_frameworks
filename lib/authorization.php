@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-require_once "request.php";
+require_once "template.php";
 
 function mh_authorization_is_authorized(string $action): bool
 {
@@ -9,7 +9,9 @@ function mh_authorization_is_authorized(string $action): bool
         !isset($_SESSION["actions"]) ||
         !mh_authentication_is_user_logged_in()
     ) {
-        mh_request_terminate(401);
+        http_response_code(401);
+        mh_template_render_401();
+        exit();
     }
     return in_array($action, $_SESSION["actions"]);
 }
@@ -20,7 +22,9 @@ function mh_authorization_is_authorized_any(array $actions): bool
         !isset($_SESSION["actions"]) ||
         !mh_authentication_is_user_logged_in()
     ) {
-        mh_request_terminate(401);
+        http_response_code(401);
+        mh_template_render_401();
+        exit();
     }
     return count(array_intersect($_SESSION["actions"], $actions)) >= 1;
 }
@@ -31,7 +35,9 @@ function mh_authorization_is_authorized_all(array $actions): bool
         !isset($_SESSION["actions"]) ||
         !mh_authentication_is_user_logged_in()
     ) {
-        mh_request_terminate(401);
+        http_response_code(401);
+        mh_template_render_401();
+        exit();
     }
     return count(array_intersect($_SESSION["actions"], $actions)) ===
         count($actions);
@@ -40,20 +46,26 @@ function mh_authorization_is_authorized_all(array $actions): bool
 function mh_authorization_assert_authorized(string $action): void
 {
     if (!mh_authorization_is_authorized($action)) {
-        mh_request_terminate(401);
+        http_response_code(401);
+        mh_template_render_401();
+        exit();
     }
 }
 
 function mh_authorization_assert_authorized_any(array $actions): void
 {
     if (!mh_authorization_is_authorized_any($actions)) {
-        mh_request_terminate(401);
+        http_response_code(401);
+        mh_template_render_401();
+        exit();
     }
 }
 
 function mh_authorization_assert_authorized_all(array $actions): void
 {
     if (!mh_authorization_is_authorized_all($actions)) {
-        mh_request_terminate(401);
+        http_response_code(401);
+        mh_template_render_401();
+        exit();
     }
 }

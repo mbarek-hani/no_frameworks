@@ -63,3 +63,11 @@ function mh_template_render_404(): void
     require "../templates/404.php";
     mh_template_render_footer();
 }
+
+function mh_template_render_401(): void
+{
+    mh_template_render_header("Permission denied");
+    mh_template_render_sidebar("");
+    require "../templates/401.php";
+    mh_template_render_footer();
+}
