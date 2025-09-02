@@ -17,10 +17,16 @@
         <?php if (isset($errors["description"])): ?>
             <p class="error"><?= $errors["description"] ?></p>
         <?php endif; ?>
-        <div>
-            <input type="submit" value="Edit" <?= !$canUpdate ? "disabled" : "" ?> />
-            <a href="/roles">Cancel</a>
-        </div>
+        <?php if ($canUpdate): ?>
+            <div>
+                <input type="submit" value="Edit" />
+                <a href="/roles">Cancel</a>
+            </div>
+        <?php else: ?>
+            <div>
+                <a href="/roles">Cancel</a>
+            </div>
+        <?php endif; ?>
     </form>
     <h2 class="H2">Actions</h2>
     <table>

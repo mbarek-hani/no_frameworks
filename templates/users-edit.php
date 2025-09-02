@@ -31,12 +31,16 @@
         <?php if (isset($errors["email"])): ?>
             <p class="error"><?= $errors["email"] ?></p>
         <?php endif; ?>
-        <div>
-            <input type="submit" value="Edit" <?= !$canUpdate
-                                                    ? "disabled"
-                                                    : "" ?> />
-            <a href="/users">Cancel</a>
-        </div>
+        <?php if ($canUpdate): ?>
+            <div>
+                <input type="submit" value="Edit" />
+                <a href="/users">Cancel</a>
+            </div>
+        <?php else: ?>
+            <div>
+                <a href="/users">Cancel</a>
+            </div>
+        <?php endif; ?>
     </form>
     <h2 class="H2">Roles</h2>
     <table>
