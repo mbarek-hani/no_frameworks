@@ -1,8 +1,8 @@
 <div class="content">
     <form class="search" method="get" action="/actions">
         <input type="text" name="q" placeholder="Search with action name..." value="<?= htmlspecialchars(
-            $search_query,
-        ) ?>"/> <input type="submit" value="search" />
+                                                                                        $search_query,
+                                                                                    ) ?>" /> <input type="submit" value="search" />
     </form>
     <table>
         <thead>
@@ -10,7 +10,14 @@
                 <th width="5%">#</th>
                 <th width="20%">name</th>
                 <th width="65%">description</th>
-                <th width="10%">actions</th>
+                <?php if (
+                    mh_authorization_is_authorized_any([
+                        "ReadAction",
+                        "DeleteAction",
+                    ])
+                ): ?>
+                    <th width="10%">actions</th>
+                <?php endif; ?>
             </tr>
         </thead>
         <tbody>
@@ -20,21 +27,26 @@
                         <td><?= $action["id"] ?></td>
                         <td><?= $action["name"] ?></td>
                         <td><?= $action["description"] ?></td>
-                        <td class="actions">
-                            <a href="/actions/edit/<?= $action["id"] ?>">
-                                <img src="/assets/edit.svg" width="30" height="30" />
-                            </a>
-                            <form class="deleteForm" id="form<?= $action[
-                                "id"
-                            ] ?>" action="/actions/delete/<?= $action[
-    "id"
-] ?>" method="POST" style="display: none;"></form>
-                            <button form="form<?= $action[
-                                "id"
-                            ] ?>" type="submit">
-                                <img src="assets/delete.svg" width="30" height="30" />
-                            </button>
-                        </td>
+                        <?php if (
+                            mh_authorization_is_authorized_any([
+                                "ReadAction",
+                                "DeleteAction",
+                            ])
+                        ): ?>
+                            <td class="actions">
+                                <?php if (mh_authorization_is_authorized("ReadAction")): ?>
+                                    <a href="/actions/edit/<?= $action["id"] ?>">
+                                        <img src="/assets/edit.svg" width="30" height="30" />
+                                    </a>
+                                <?php endif; ?>
+                                <?php if (mh_authorization_is_authorized("DeleteAction")): ?>
+                                    <form class="deleteForm" id="form<?= $action["id"] ?>" action="/actions/delete/<?= $action["id"] ?>" method="POST" style="display: none;"></form>
+                                    <button form="form<?= $action["id"] ?>" type="submit">
+                                        <img src="assets/delete.svg" width="30" height="30" />
+                                    </button>
+                                <?php endif; ?>
+                            </td>
+                        <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -52,13 +64,15 @@
         $current_page,
     ); ?>
 </div>
-<script>
+<?php if (mh_authorization_is_authorized("DeleteAction")): ?>
+    <script>
         const deleteForms = document.querySelectorAll(".deleteForm");
-        for (let i = 0; i<deleteForms.length; i++) {
+        for (let i = 0; i < deleteForms.length; i++) {
             deleteForms[i].addEventListener("submit", (e) => {
-                if(!confirm("Are you sure you want to delete this action?")) {
+                if (!confirm("Are you sure you want to delete this action?")) {
                     e.preventDefault();
                 }
             });
         }
     </script>
+<?php endif; ?>
