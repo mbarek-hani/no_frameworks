@@ -1,8 +1,8 @@
 <div class="content">
     <form class="search" method="get" action="/users">
         <input type="text" name="q" placeholder="Search with username ..." value="<?= htmlspecialchars(
-            $search_query,
-        ) ?>"/>
+                                                                                        $search_query,
+                                                                                    ) ?>" />
         <input type="submit" value="search" />
     </form>
     <table>
@@ -49,14 +49,8 @@
                                 <?php if (
                                     mh_authorization_is_authorized("DeleteUser")
                                 ): ?>
-                                    <form class="deleteForm" id="form<?= $user[
-                                        "id"
-                                    ] ?>" action="/users/delete/<?= $user[
-    "id"
-] ?>" method="POST" style="display: none;"></form>
-                                    <button form="form<?= $user[
-                                        "id"
-                                    ] ?>" type="submit">
+                                    <form class="deleteForm" id="form<?= $user["id"] ?>" action="/users/delete/<?= $user["id"] ?>" method="POST" style="display: none;"></form>
+                                    <button form="form<?= $user["id"] ?>" type="submit">
                                         <img src="assets/delete.svg" width="30" height="30" />
                                     </button>
                                 <?php endif; ?>
@@ -79,13 +73,15 @@
         $current_page,
     ); ?>
 </div>
-<script>
-    const deleteForms = document.querySelectorAll(".deleteForm");
-    for (let i = 0; i<deleteForms.length; i++) {
-        deleteForms[i].addEventListener("submit", (e) => {
-            if(!confirm("Are you sure you want to delete this user?")) {
-                e.preventDefault();
-            }
-        });
-    }
-</script>
+<?php if (mh_authorization_is_authorized("DeleteUser")): ?>
+    <script>
+        const deleteForms = document.querySelectorAll(".deleteForm");
+        for (let i = 0; i < deleteForms.length; i++) {
+            deleteForms[i].addEventListener("submit", (e) => {
+                if (!confirm("Are you sure you want to delete this user?")) {
+                    e.preventDefault();
+                }
+            });
+        }
+    </script>
+<?php endif; ?>
