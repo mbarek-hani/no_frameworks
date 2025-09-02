@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once "../lib/errors.php";
 require_once "../lib/authentication.php";
+require_once "../lib/authorization.php";
 require_once "../lib/request.php";
 require_once "../lib/database.php";
 require_once "../lib/validate.php";
@@ -11,6 +12,8 @@ require_once "../lib/template.php";
 mh_request_assert_methods(["GET", "POST"]);
 
 $logged_in_user = mh_authentication_require_login();
+
+mh_authorization_assert_authorized_any(["ReadRole", "UpdateRole"]);
 
 function mh_render_roles_edit(
     array $role,
@@ -41,6 +44,7 @@ $role_actions = [];
 $other_actions = [];
 
 if (mh_request_is_method("GET")) {
+    mh_authorization_assert_authorized("ReadRole");
     $statement = $pdo->prepare("select * from roles where id = :id");
     $statement->bindValue(":id", $role_id, PDO::PARAM_INT);
     $statement->execute();
@@ -64,6 +68,7 @@ if (mh_request_is_method("GET")) {
         $statement->fetchAll(PDO::FETCH_ASSOC),
     );
 } else {
+    mh_authorization_assert_authorized("UpdateRole");
     $action_id = mh_request_get_int_parameter(
         "action",
         INPUT_POST,

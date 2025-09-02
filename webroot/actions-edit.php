@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once "../lib/errors.php";
 require_once "../lib/authentication.php";
+require_once "../lib/authorization.php";
 require_once "../lib/request.php";
 require_once "../lib/database.php";
 require_once "../lib/validate.php";
@@ -11,6 +12,8 @@ require_once "../lib/template.php";
 mh_request_assert_methods(["GET", "POST"]);
 
 $logged_in_user = mh_authentication_require_login();
+
+mh_authorization_assert_authorized_any(["ReadAction", "UpdateAction"]);
 
 function mh_render_actions_edit(array $action, array $errors): void
 {
@@ -35,11 +38,13 @@ $errors = [
 $edited_action = null;
 
 if (mh_request_is_method("GET")) {
+    mh_authorization_assert_authorized("ReadAction");
     $statement = $pdo->prepare("select * from actions where id = :id");
     $statement->bindValue(":id", $id, PDO::PARAM_INT);
     $statement->execute();
     $action = $statement->fetch(PDO::FETCH_ASSOC);
 } else {
+    mh_authorization_assert_authorized("UpdateAction");
     $edited_action = [
         "id" => $id,
         "name" => trim($_POST["name"] ?? ""),

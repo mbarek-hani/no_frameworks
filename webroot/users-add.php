@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require_once "../lib/errors.php";
 require_once "../lib/authentication.php";
+require_once "../lib/authorization.php";
 require_once "../lib/request.php";
 require_once "../lib/database.php";
 require_once "../lib/validate.php";
@@ -12,6 +13,8 @@ require_once "../lib/template.php";
 mh_request_assert_methods(["GET", "POST"]);
 
 $logged_in_user = mh_authentication_require_login();
+
+mh_authorization_assert_authorized("CreateUser");
 
 function mh_render_users_add(array $user, array $errors): void
 {
