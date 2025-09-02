@@ -13,7 +13,14 @@
                 <th width="15%">first name</th>
                 <th width="15%">last name</th>
                 <th width="35%">email</th>
-                <th width="10%">actions</th>
+                <?php if (
+                    mh_authorization_is_authorized_any([
+                        "ReadUser",
+                        "DeleteUser",
+                    ])
+                ): ?>
+                    <th width="10%">actions</th>
+                <?php endif; ?>
             </tr>
         </thead>
         <tbody>
@@ -25,19 +32,36 @@
                         <td><?= $user["first_name"] ?></td>
                         <td><?= $user["last_name"] ?></td>
                         <td><?= $user["email"] ?></td>
-                        <td class="actions">
-                            <a href="/users/edit/<?= $user["id"] ?>">
-                                <img src="/assets/edit.svg" width="30" height="30" />
-                            </a>
-                            <form class="deleteForm" id="form<?= $user[
-                                "id"
-                            ] ?>" action="/users/delete/<?= $user[
+                        <?php if (
+                            mh_authorization_is_authorized_any([
+                                "ReadUser",
+                                "DeleteUser",
+                            ])
+                        ): ?>
+                            <td class="actions">
+                                <?php if (
+                                    mh_authorization_is_authorized("ReadUser")
+                                ): ?>
+                                    <a href="/users/edit/<?= $user["id"] ?>">
+                                        <img src="/assets/edit.svg" width="30" height="30" />
+                                    </a>
+                                <?php endif; ?>
+                                <?php if (
+                                    mh_authorization_is_authorized("DeleteUser")
+                                ): ?>
+                                    <form class="deleteForm" id="form<?= $user[
+                                        "id"
+                                    ] ?>" action="/users/delete/<?= $user[
     "id"
 ] ?>" method="POST" style="display: none;"></form>
-                            <button form="form<?= $user["id"] ?>" type="submit">
-                                <img src="assets/delete.svg" width="30" height="30" />
-                            </button>
-                        </td>
+                                    <button form="form<?= $user[
+                                        "id"
+                                    ] ?>" type="submit">
+                                        <img src="assets/delete.svg" width="30" height="30" />
+                                    </button>
+                                <?php endif; ?>
+                            </td>
+                        <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>

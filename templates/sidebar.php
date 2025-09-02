@@ -6,19 +6,25 @@
                 ? 'class="active"'
                 : ""; ?> >
                 <a href="/users">Users</a>
-                <a href="/users/add">+</a>
+                <?php if (mh_authorization_is_authorized("CreateUser")): ?>
+                    <a href="/users/add">+</a>
+                <?php endif; ?>
             </li>
             <li <?php echo str_starts_with($url_path, "/roles")
                 ? 'class="active"'
                 : ""; ?> >
                 <a href="/roles">roles</a>
-                <a href="/roles/add">+</a>
+                <?php if (mh_authorization_is_authorized("CreateRole")): ?>
+                    <a href="/roles/add">+</a>
+                <?php endif; ?>
             </li>
             <li <?php echo str_starts_with($url_path, "/actions")
                 ? 'class="active"'
                 : ""; ?> >
-                        <a href="/actions">actions</a>
-                        <a href="/actions/add">+</a>
+                <a href="/actions">actions</a>
+                <?php if (mh_authorization_is_authorized("CreateAction")): ?>
+                    <a href="/actions/add">+</a>
+                <?php endif; ?>
             </li>
             <li class="header">Session</li>
             <li>
