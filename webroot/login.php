@@ -59,7 +59,15 @@ if (mh_request_is_method("POST")) {
         ) {
             $errors["username"] = "Invalid credentials";
         } else {
+            $statement = $pdo->prepare(
+                "select distinct a.name from users u join users_roles ur on u.id = ur.user_id join roles_actions ra on ur.role_id = ra.role_id join actions a on ra.action_id = a.id where u.id = :user_id",
+            );
+            $statement->bindValue(":user_id", $user["id"], PDO::PARAM_INT);
+            $statement->execute();
+            $actions = $statement->fetchAll(PDO::FETCH_COLUMN);
+
             $_SESSION["user_id"] = $user["id"];
+            $_SESSION["actions"] = $actions;
             mh_request_redirect("/users");
         }
     }
