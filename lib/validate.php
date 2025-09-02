@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 function mh_validate_username(string $username, string $fieldname): ?string
