@@ -29,8 +29,8 @@
                         <td><?= $role["description"] ?></td>
                         <?php if (
                             mh_authorization_is_authorized_any([
-                                "ReadUser",
-                                "DeleteUser",
+                                "ReadRole",
+                                "DeleteRole",
                             ])
                         ): ?>
                             <td class="actions">
