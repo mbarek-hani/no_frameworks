@@ -2,11 +2,11 @@
     <div class="sidebar">
         <ul class="sidebar-nav">
             <li class="header">Products</li>
-            <li <?php echo str_starts_with($url_path, "/catalog")
+            <li <?php echo str_starts_with($url_path, "/categories")
                     ? 'class="active"'
                     : ""; ?>>
-                <a href="/catalog">Catalog</a>
-                <a href="/catalog/add">+</a>
+                <a href="/categories">Categories</a>
+                <a href="/categories/add">+</a>
             </li>
             <li class="header">Access control</li>
             <li <?php echo str_starts_with($url_path, "/users")
