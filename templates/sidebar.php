@@ -1,6 +1,13 @@
 <?php if (mh_authentication_is_user_logged_in()): ?>
     <div class="sidebar">
         <ul class="sidebar-nav">
+            <li class="header">Products</li>
+            <li <?php echo str_starts_with($url_path, "/catalog")
+                    ? 'class="active"'
+                    : ""; ?>>
+                <a href="/catalog">Catalog</a>
+                <a href="/catalog/add">+</a>
+            </li>
             <li class="header">Access control</li>
             <li <?php echo str_starts_with($url_path, "/users")
                     ? 'class="active"'
