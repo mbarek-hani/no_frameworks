@@ -26,6 +26,12 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Create visual hierarchy through indentation using margin-left propery of css
+        document.querySelectorAll('.tree-item').forEach(item => {
+            const depth = parseInt(item.dataset.depth);
+            const marginLeft = `${depth * 24}px`;
+            item.style.marginLeft = marginLeft;
+        });
         // Add expantion of the tree items logic
         document.querySelectorAll('.expand-toggle').forEach(elem => {
             if (elem.classList.contains('no-children')) {

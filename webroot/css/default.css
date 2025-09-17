@@ -381,38 +381,6 @@ form.edit a {
   position: relative;
 }
 
-/* Create visual hierarchy through indentation */
-.tree-item[data-depth="0"] {
-  margin-left: 0px;
-}
-.tree-item[data-depth="1"] {
-  margin-left: 24px;
-}
-.tree-item[data-depth="2"] {
-  margin-left: 48px;
-}
-.tree-item[data-depth="3"] {
-  margin-left: 72px;
-}
-.tree-item[data-depth="4"] {
-  margin-left: 96px;
-}
-.tree-item[data-depth="5"] {
-  margin-left: 120px;
-}
-.tree-item[data-depth="6"] {
-  margin-left: 144px;
-}
-.tree-item[data-depth="7"] {
-  margin-left: 168px;
-}
-.tree-item[data-depth="8"] {
-  margin-left: 192px;
-}
-.tree-item[data-depth="9"] {
-  margin-left: 216px;
-}
-
 /* Tree lines for visual connection */
 .tree-item:not([data-depth="0"]):before {
   content: "";
