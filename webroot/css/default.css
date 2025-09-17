@@ -363,6 +363,259 @@ form.edit a {
   background-color: var(--primary);
   color: var(--frground);
 }
+/* categories tree*/
+.tree-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tree-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  margin: 4px 0;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  position: relative;
+}
+
+.tree-item:hover {
+  background: #f8fafc;
+  border-color: #3b82f6;
+  transform: translateX(2px);
+}
+
+/* Create visual hierarchy through indentation */
+.tree-item[data-depth="0"] {
+  margin-left: 0px;
+  background: #3b82f6;
+  color: white;
+  font-weight: 600;
+}
+.tree-item[data-depth="1"] {
+  margin-left: 24px;
+}
+.tree-item[data-depth="2"] {
+  margin-left: 48px;
+}
+.tree-item[data-depth="3"] {
+  margin-left: 72px;
+}
+.tree-item[data-depth="4"] {
+  margin-left: 96px;
+}
+.tree-item[data-depth="5"] {
+  margin-left: 120px;
+}
+.tree-item[data-depth="6"] {
+  margin-left: 144px;
+}
+.tree-item[data-depth="7"] {
+  margin-left: 168px;
+}
+.tree-item[data-depth="8"] {
+  margin-left: 192px;
+}
+.tree-item[data-depth="9"] {
+  margin-left: 216px;
+}
+
+/* Tree lines for visual connection */
+.tree-item:not([data-depth="0"]):before {
+  content: "";
+  position: absolute;
+  left: -16px;
+  top: 50%;
+  width: 12px;
+  height: 1px;
+  background: #cbd5e0;
+}
+
+.tree-item:not([data-depth="0"]):after {
+  content: "";
+  position: absolute;
+  left: -16px;
+  top: 0;
+  width: 1px;
+  height: 50%;
+  background: #cbd5e0;
+}
+
+/* Special styling for root items */
+.tree-item[data-depth="0"] .category-name {
+  color: white;
+}
+
+.tree-item[data-depth="0"]:hover {
+  background: #2563eb;
+}
+
+.expand-toggle {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  border-radius: 4px;
+  background: #e2e8f0;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.tree-item[data-depth="0"] .expand-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.expand-toggle:hover {
+  background: #cbd5e0;
+  color: #475569;
+}
+
+.tree-item[data-depth="0"] .expand-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.expand-toggle.expanded {
+  background: #3b82f6;
+  color: white;
+  transform: rotate(90deg);
+}
+
+.tree-item[data-depth="0"] .expand-toggle.expanded {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.expand-toggle.no-children {
+  background: transparent;
+  cursor: default;
+  color: #94a3b8;
+}
+
+.expand-toggle.no-children:hover {
+  background: transparent;
+  color: #94a3b8;
+}
+
+.category-name {
+  flex: 1;
+  font-weight: 500;
+  color: #374151;
+  margin-right: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.tree-item:hover .actions {
+  opacity: 1;
+}
+
+.actions a,
+.actions button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.actions a {
+  background: #10b981;
+  color: white;
+}
+
+.actions a:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+.actions button {
+  background: #ef4444;
+  color: white;
+}
+
+.actions button:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+.category-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* Hide collapsed items */
+.tree-item.hidden {
+  display: none;
+}
+
+/* Smooth animations */
+.tree-item {
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Search functionality */
+.search-box {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.search-box:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.tree-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.tree-header h2 {
+  color: #1a202c;
+  font-size: 24px;
+  font-weight: 700;
+}
+/* end categories tree*/
 
 @media (prefers-color-scheme: light) {
   :root {

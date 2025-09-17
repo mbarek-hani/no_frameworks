@@ -20,7 +20,7 @@ function mh_render_categories(array $categories): void
 
 $pdo = mh_database_get_connection();
 
-$statement = $pdo->query("select node.id, node.name, count(parent.name) -1 as depth from categories as node, categories as parent where node.lft between parent.lft and parent.rgt group by node.name order by node.lft");
+$statement = $pdo->query("select node.id, node.name, count(parent.name) -1 as depth, node.lft, node.rgt from categories as node, categories as parent where node.lft between parent.lft and parent.rgt group by node.name order by node.lft");
 $categories = mh_template_escape_array_of_arrays($statement->fetchAll(PDO::FETCH_ASSOC));
 
 
