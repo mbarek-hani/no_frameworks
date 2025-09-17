@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content" style="margin-top: 70px;">
     <ul class="tree-list">
         <?php if (count($categories) > 0): ?>
             <?php foreach ($categories as $category): ?>
