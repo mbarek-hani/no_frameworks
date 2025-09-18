@@ -2,7 +2,7 @@
     <ul class="tree-list">
         <?php if (count($categories) > 0): ?>
             <?php foreach ($categories as $category): ?>
-                <li class="tree-item hidden" data-depth="<?= $category['depth'] ?>">
+                <li class="tree-item hidden" data-depth="<?= $category['depth'] ?>" style="margin-left: <?= intval($category['depth']) * 24 ?>px;">
                     <span class="expand-toggle <?= intval($category["rgt"]) !== intval($category["lft"]) + 1 ? '' : 'no-children' ?>">
                         <?= intval($category["rgt"]) !== intval($category["lft"]) + 1 ? '▶' : '' ?>
                     </span>
@@ -26,12 +26,6 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Create visual hierarchy through indentation using margin-left propery of css
-        document.querySelectorAll('.tree-item').forEach(item => {
-            const depth = parseInt(item.dataset.depth);
-            const marginLeft = `${depth * 24}px`;
-            item.style.marginLeft = marginLeft;
-        });
         // Add expantion of the tree items logic
         document.querySelectorAll('.expand-toggle').forEach(elem => {
             if (elem.classList.contains('no-children')) {
