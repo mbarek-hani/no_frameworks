@@ -204,6 +204,7 @@ form.add-role div label {
 }
 
 form.edit div input,
+form.edit div .input,
 form.login-form div input,
 form.add-role div select {
   max-width: 100%;
