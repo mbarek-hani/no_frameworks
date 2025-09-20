@@ -9,14 +9,19 @@
         <?php endif; ?>
         <div>
             <label for="parent">Parent category</label>
-            <?php if (count($categories) > 0): ?>
+            <?php if ($category["lft"] == 1): ?>
+                <select disabled class="input">
+                    <option value="0" selected>No parent</option>
+                </select>
+                <input type="hidden" name="parent_id" value="0">
+            <?php elseif (count($categories) > 0): ?>
                 <select id="parent" name="parent_id" class="input">
                     <?php foreach ($categories as $cat): ?>
                         <option value="<?= $cat["id"] ?>" <?= $cat["id"] == $parent_category["id"] ? "selected" : "" ?>><?= str_repeat("&nbsp;&nbsp;", $cat["depth"]) . $cat["name"] ?></option>
                     <?php endforeach; ?>
                 </select>
             <?php else: ?>
-                <select disabled>
+                <select disabled class="input">
                     <option>No categories found.</option>
                 </select>
             <?php endif; ?>
