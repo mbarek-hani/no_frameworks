@@ -133,7 +133,7 @@ function mh_validate_category_name(string $category_name, string $fieldname): ?s
     $msg = null;
     if (empty($category_name)) {
         $msg = "$fieldname is required";
-    } elseif (!preg_match("/^[a-zA-Z ]{4,64}$/", $category_name)) {
+    } elseif (!preg_match("/^[a-zA-Z' ]{4,64}$/", $category_name)) {
         $msg = "$fieldname should be min 4 max 64 letters";
     }
     return $msg;
