@@ -41,6 +41,7 @@ $errors = [
     "first_name" => null,
     "last_name" => null,
     "email" => null,
+    "password" => null,
 ];
 $edited_user = null;
 $user_roles = [];
@@ -117,8 +118,9 @@ if (mh_request_is_method("GET")) {
             "first_name" => trim($_POST["first_name"] ?? ""),
             "last_name" => trim($_POST["last_name"] ?? ""),
             "email" => trim($_POST["email"] ?? ""),
+            "password" => $_POST["password"] ?? "",
+            "password_confirm" => $_POST["password_confirm"] ?? "",
         ];
-
         $errors["username"] = mh_validate_username(
             $edited_user["username"],
             "username",
@@ -132,6 +134,11 @@ if (mh_request_is_method("GET")) {
             "last name",
         );
         $errors["email"] = mh_validate_email($edited_user["email"], "email");
+
+        $no_password = empty($edited_user["password"]);
+        if (!$no_password) {
+            $errors["password"] = mh_validate_password($edited_user["password"], $edited_user["password_confirm"], "password");
+        }
 
         if (
             $errors["username"] === null &&
@@ -173,9 +180,17 @@ if (mh_request_is_method("GET")) {
         }
 
         if (mh_errors_is_empty($errors)) {
-            $statement = $pdo->prepare(
-                "update users set username=:username, first_name=:first_name, last_name=:last_name, email=:email where id=:id",
-            );
+            if (!$no_password) {
+                $statement = $pdo->prepare(
+                    "update users set username=:username, first_name=:first_name, last_name=:last_name, email=:email, password=:password where id=:id"
+                );
+                $password_hash = password_hash($edited_user["password"], PASSWORD_DEFAULT);
+                $statement->bindValue(":password", $password_hash, Pdo::PARAM_STR);
+            } else {
+                $statement = $pdo->prepare(
+                    "update users set username=:username, first_name=:first_name, last_name=:last_name, email=:email where id=:id",
+                );
+            }
             $statement->bindValue(
                 ":username",
                 $edited_user["username"],

@@ -31,6 +31,17 @@
         <?php if (isset($errors["email"])): ?>
             <p class="error"><?= $errors["email"] ?></p>
         <?php endif; ?>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" name="password" placeholder="password" <?= !$canUpdate ? "readonly" : "" ?> />
+        </div>
+        <?php if (isset($errors["password"])): ?>
+            <p class="error"><?= $errors["password"] ?></p>
+        <?php endif; ?>
+        <div>
+            <label for="passwordConfirm">Confirm password</label>
+            <input type="password" name="password_confirm" placeholder="confirm password" <?= !$canUpdate ? "readonly" : "" ?> />
+        </div>
         <?php if ($canUpdate): ?>
             <div>
                 <input type="submit" value="Edit" />
