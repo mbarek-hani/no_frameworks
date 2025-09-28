@@ -28,12 +28,15 @@ $errors = [
     "first_name" => null,
     "last_name" => null,
     "email" => null,
+    "password" => null,
+    "password_confirm" => null,
 ];
 $added_user = [
     "username" => null,
     "first_name" => null,
     "last_name" => null,
     "email" => null,
+    "password" => null,
 ];
 
 if (mh_request_is_method("POST")) {
@@ -42,6 +45,8 @@ if (mh_request_is_method("POST")) {
         "first_name" => trim($_POST["first_name"] ?? ""),
         "last_name" => trim($_POST["last_name"] ?? ""),
         "email" => trim($_POST["email"] ?? ""),
+        "password" => $_POST["password"] ?? "",
+        "password_confirm" => $_POST["password_confirm"] ?? "",
     ];
 
     $errors["username"] = mh_validate_username(
@@ -57,6 +62,7 @@ if (mh_request_is_method("POST")) {
         "last name",
     );
     $errors["email"] = mh_validate_email($added_user["email"], "email");
+    $errors["password"] = mh_validate_password($added_user["password"], $added_user["password_confirm"], "password");
 
     if (
         $errors["username"] === null &&
@@ -95,8 +101,9 @@ if (mh_request_is_method("POST")) {
     }
 
     if (mh_errors_is_empty($errors)) {
+        $password_hash = password_hash($added_user["password"], PASSWORD_DEFAULT);
         $statement = $pdo->prepare(
-            "insert into users(username, first_name, last_name, email) values (:username, :first_name, :last_name, :email)",
+            "insert into users(username, first_name, last_name, email, password) values (:username, :first_name, :last_name, :email, :password)",
         );
         $statement->bindValue(
             ":username",
@@ -113,7 +120,16 @@ if (mh_request_is_method("POST")) {
             $added_user["last_name"],
             PDO::PARAM_STR,
         );
-        $statement->bindValue(":email", $added_user["email"], PDO::PARAM_STR);
+        $statement->bindValue(
+            ":email",
+            $added_user["email"],
+            PDO::PARAM_STR
+        );
+        $statement->bindValue(
+            ":password",
+            $password_hash,
+            PDO::PARAM_STR,
+        );
         $statement->execute();
 
         mh_request_redirect("/users");

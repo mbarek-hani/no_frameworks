@@ -38,6 +38,21 @@ function mh_validate_name(string $name, string $fieldname): ?string
     return $msg;
 }
 
+function mh_validate_password(
+    string $password,
+    string $password_confirm,
+    string $fieldname,
+): ?string {
+    $msg = null;
+    if (empty($password)) {
+        $msg = "$fieldname is required";
+    } elseif (!preg_match("/^[a-zA-Z0-9]{8,24}$/", $password)) {
+        $msg = "$fieldname must be at least 8 characters";
+    } elseif ($password !== $password_confirm) {
+        $msg = "passwords do not match";
+    }
+    return $msg;
+}
 /*
  * validate the search GET parameter.If the validation failed terminate the request with status code 400 BAD REQUEST
  * @param $parameter the name of the search parameter
