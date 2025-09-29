@@ -2,8 +2,8 @@
     <ul class="tree-list">
         <?php if (count($categories) > 0): ?>
             <?php foreach ($categories as $category): ?>
-                <li class="tree-item hidden" data-depth="<?= $category['depth'] ?>" style="margin-left: <?= intval($category['depth']) * 24 ?>px;">
-                    <span class="expand-toggle <?= intval($category["rgt"]) !== intval($category["lft"]) + 1 ? '' : 'no-children' ?>">
+                <li class="tree-item" data-depth="<?= $category['depth'] ?>" style="margin-left: <?= intval($category['depth']) * 24 ?>px;">
+                    <span class="expand-toggle expanded <?= intval($category["rgt"]) !== intval($category["lft"]) + 1 ? '' : 'no-children' ?>">
                         <?= intval($category["rgt"]) !== intval($category["lft"]) + 1 ? '▶' : '' ?>
                     </span>
                     <span class="category-name"><?= $category['name'] ?></span>
@@ -86,10 +86,6 @@
                     });
                 }
             });
-        });
-        // Initialize: Start with root items not expanded and others invisible
-        document.querySelectorAll('.tree-item[data-depth="0"]').forEach(root => {
-            root.classList.remove("hidden");
         });
         // Add confirmation dialog before deleting any category
         document.querySelectorAll(".deleteForm").forEach(form => {
