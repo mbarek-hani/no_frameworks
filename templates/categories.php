@@ -11,11 +11,13 @@
                         <a href="/categories/edit/<?= $category['id'] ?>">
                             <img src="assets/edit.svg" width="30" height="30" />
                         </a>
-                        <form class="deleteForm" action="/categories/delete/<?= $category['id'] ?>" method="POST" style="display: inline;">
-                            <button type="submit">
-                                <img src="assets/delete.svg" width="30" height="30" />
-                            </button>
-                        </form>
+                        <?php if (intval($category["rgt"]) === intval($category["lft"] + 1)): ?>
+                            <form class="deleteForm" action="/categories/delete/<?= $category['id'] ?>" method="POST" style="display: inline;">
+                                <button type="submit">
+                                    <img src="assets/delete.svg" width="30" height="30" />
+                                </button>
+                            </form>
+                        <?php endif; ?>
                     </div>
                 </li>
             <?php endforeach; ?>
