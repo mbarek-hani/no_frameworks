@@ -32,7 +32,6 @@ if (!mh_database_does_row_exist($pdo, "categories", $category_id)) {
 $category = null;
 $errors = [
     "name" => null,
-    "parent" => null,
 ];
 $edited_category = null;
 
@@ -58,25 +57,21 @@ if (mh_request_is_method("GET")) {
         "name" => trim($_POST["name"] ?? ""),
         "lft" => $left,
         "rgt" => $right,
-        "parent_id" => mh_request_get_int_parameter("parent_id", INPUT_POST, 0, PHP_INT_MAX, -1),
     ];
 
     $errors["name"] = mh_validate_category_name($edited_category["name"], "name");
-    $errors["parent"] = $edited_category["parent_id"] === -1 ? "parent category is required" : null;
 
     if ($errors["name"] === null && !mh_database_is_unique_column_value($pdo, "categories", "name", $edited_category["name"], $category_id)) {
         $errors["name"] = "name already in use";
     }
 
     if (mh_errors_is_empty($errors)) {
-        if (($edited_category["parent_id"] === 0 && $edited_category["lft"]) || ($edited_category["parent_id"] === $parent_category["id"])) {
-            $statement = $pdo->prepare("update categories set name=:name where id=:id");
-            $statement->bindValue(":name", $edited_category["name"], PDO::PARAM_STR);
-            $statement->bindValue(":id", $edited_category["id"], PDO::PARAM_INT);
-            $statement->execute();
+        $statement = $pdo->prepare("update categories set name=:name where id=:id");
+        $statement->bindValue(":name", $edited_category["name"], PDO::PARAM_STR);
+        $statement->bindValue(":id", $edited_category["id"], PDO::PARAM_INT);
+        $statement->execute();
 
-            mh_request_redirect("/categories");
-        }
+        mh_request_redirect("/categories");
     }
 }
 

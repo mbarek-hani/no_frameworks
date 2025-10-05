@@ -15,7 +15,7 @@
                 </select>
                 <input type="hidden" name="parent_id" value="0">
             <?php elseif (count($categories) > 0): ?>
-                <select id="parent" name="parent_id" class="input">
+                <select id="parent" name="parent_id" class="input" disabled>
                     <?php foreach ($categories as $cat): ?>
                         <option value="<?= $cat["id"] ?>" <?= $cat["id"] == $parent_category["id"] ? "selected" : "" ?>><?= str_repeat("&nbsp;&nbsp;", $cat["depth"]) . $cat["name"] ?></option>
                     <?php endforeach; ?>
@@ -26,9 +26,6 @@
                 </select>
             <?php endif; ?>
         </div>
-        <?php if (isset($errors["parent"])): ?>
-            <p class="error"><?= $errors["parent"] ?></p>
-        <?php endif; ?>
         <div>
             <input type="submit" value="Edit" />
             <a href="/categories">Cancel</a>
