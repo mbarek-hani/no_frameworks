@@ -63,9 +63,6 @@ function mh_validate_search_query_parameter(string $parameter): string
     if (!isset($_GET[$parameter]) || empty($_GET[$parameter])) {
         return "";
     }
-    if (!preg_match("/^[a-zA-Z0-9\s]{1,32}$/", trim($_GET[$parameter]))) {
-        mh_request_terminate(400);
-    }
     return trim($_GET[$parameter]);
 }
 
