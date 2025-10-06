@@ -9,6 +9,7 @@ require_once "../lib/database.php";
 require_once "../lib/request.php";
 require_once "../lib/template.php";
 require_once "../lib/validate.php";
+require_once "../lib/users.php";
 
 mh_request_assert_method("GET");
 
@@ -33,12 +34,7 @@ $search = mh_validate_search_query_parameter("q");
 
 $pdo = mh_database_get_connection();
 
-$statement = $pdo->prepare(
-    "select count(*) from users where username like :search",
-);
-$statement->bindValue(":search", "%$search%");
-$statement->execute();
-$total_users = $statement->fetchColumn(0);
+$total_users = mh_users_count($pdo, $search);
 
 $total_pages = intval(ceil($total_users / $size));
 if ($total_pages > 0 && $page > $total_pages) {
