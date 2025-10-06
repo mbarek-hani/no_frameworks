@@ -54,7 +54,7 @@ if (mh_request_is_method("GET")) {
     $user = mh_users_get_by_id($pdo, $user_id);
 
     $user_roles = mh_template_escape_array_of_arrays(
-        mh_users_get_roles($pdo, $user_id),
+        mh_users_get_roles($pdo, $user_id)
     );
 
     $statement = $pdo->prepare(
