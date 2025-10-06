@@ -82,3 +82,13 @@ function mh_users_add_role(PDO $pdo, int $user_id, int $role_id): void
     $statement->bindValue(":role_id", $role_id, PDO::PARAM_INT);
     $statement->execute();
 }
+
+function mh_users_remove_role(PDO $pdo, int $user_id, int $role_id): void
+{
+    $statement = $pdo->prepare(
+        "delete from users_roles where user_id=:user_id and role_id=:role_id",
+    );
+    $statement->bindValue(":user_id", $user_id, PDO::PARAM_INT);
+    $statement->bindValue(":role_id", $role_id, PDO::PARAM_INT);
+    $statement->execute();
+}
