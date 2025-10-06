@@ -26,7 +26,7 @@ function development_exception_handler(Throwable $exception)
 set_exception_handler("development_exception_handler");
 set_error_handler("development_error_handler");
 
-/*
+/**
  * check if there is any errors in an array of errors
  * @param $errors an associative array with keys that are fields and string values as their corresponding error or null if there is no error
  * @return bool true if empty, false if not

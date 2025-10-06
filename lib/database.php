@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once "dotenv.php";
 
-/*
+/** 
  * get database connection as a PDO object
  * @return PDO
  * @throws PDOException
@@ -22,7 +22,7 @@ function mh_database_get_connection(): PDO
     return $pdo;
 }
 
-/*
+/**
  * check if a row exists with id in a specific table
  * @param $pdo PDO object to connect to db
  * @param $table string table to look in
@@ -37,7 +37,7 @@ function mh_database_does_row_exist(PDO $pdo, string $table, int $id): bool
     return $statement->fetchColumn(0) == 1;
 }
 
-/*
+/**
  * check if a value is unique in a specific column of a specific table.
  * @param $pdo PDO object to connect to db
  * @param $table_name the table name
@@ -78,7 +78,7 @@ function mh_database_is_unique_column_value(
     return $statement->fetchColumn(0) == 0;
 }
 
-/*
+/**
  * check if a user exists with first and last names
  * @param $pdo PDO object to connect to db
  * @param $first_name first name to look for

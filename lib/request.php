@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * terminate the current request with a given status code
  * @param $code the status code
  */
@@ -12,7 +12,7 @@ function mh_request_terminate(int $code): void
     die();
 }
 
-/*
+/**
  * insure the request is made with a given method otherwise terminate it with 405 METHOD NOT ALLOWED and set the allow header
  * @param $method the method to allow
  */
@@ -28,7 +28,7 @@ function mh_request_assert_method(string $method): void
     }
 }
 
-/*
+/**
  * insure the request is made with either one of the given methods otherwise terminate it with 405 METHOD NOT ALLOWED and set the allow header
  * @param $methods the methods to allow
  */
@@ -44,7 +44,7 @@ function mh_request_assert_methods(array $methods): void
     }
 }
 
-/*
+/**
  * validate an input (GET or POST) parameter to be an integer in the range of a given min and max and return it or a default if this parameter doesn't exist, otherwise terminate request with a status of 400 BAD REQUEST
  * @param $parameter the input parameter to validate
  * @param $input the input (either INPUT_GET or INPUT_POST) to look for parameter in
@@ -76,7 +76,7 @@ function mh_request_get_int_parameter(
     return $value;
 }
 
-/*
+/**
  * check if the request method is the given one
  * @param $method the method to check for
  * @return bool true if it is, false if not
@@ -86,7 +86,7 @@ function mh_request_is_method(string $method): bool
     return $_SERVER["REQUEST_METHOD"] === $method;
 }
 
-/*
+/**
  * redirect clients to the given url
  * @param $url the url to redirect to
  */

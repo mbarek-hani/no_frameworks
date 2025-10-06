@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * count the total users found in the users table where username like $search_param
  * if $search_param is an empty string it will count all users 
  * @param $search_param the username to search with 
@@ -24,7 +24,7 @@ function mh_users_count(PDO $pdo, string $search_param): int
     return intval($statement->fetchColumn(0));
 }
 
-/*
+/**
  * get all users from users table where username like $search_param from $offset to $limit
  * @param $search_param the username to search with 
  * @param $offset the row to start fetching from 

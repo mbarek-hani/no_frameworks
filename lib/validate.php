@@ -53,7 +53,7 @@ function mh_validate_password(
     }
     return $msg;
 }
-/*
+/**
  * validate the search GET parameter.If the validation failed terminate the request with status code 400 BAD REQUEST
  * @param $parameter the name of the search parameter
  * @return string the parameter trimmed after successfull validation

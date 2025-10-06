@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * load environment variables from a .env file
  * @param $path the path of the .env file
  * @throws Exception when $path doesn't exist
