@@ -78,12 +78,7 @@ if (mh_request_is_method("GET")) {
         $action = $_POST["action"] ?? "";
         switch ($action) {
             case "add":
-                $statement = $pdo->prepare(
-                    "insert into users_roles values(:user_id, :role_id)",
-                );
-                $statement->bindValue(":user_id", $user_id, PDO::PARAM_INT);
-                $statement->bindValue(":role_id", $new_role_id, PDO::PARAM_INT);
-                $statement->execute();
+                mh_users_add_role($pdo, $user_id, $new_role_id);
                 mh_request_redirect("/users/edit/$user_id");
                 break;
             case "remove":

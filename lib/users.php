@@ -72,3 +72,13 @@ function mh_users_get_other_roles(PDO $pdo, int $user_id): array
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function mh_users_add_role(PDO $pdo, int $user_id, int $role_id): void
+{
+    $statement = $pdo->prepare(
+        "insert into users_roles values(:user_id, :role_id)",
+    );
+    $statement->bindValue(":user_id", $user_id, PDO::PARAM_INT);
+    $statement->bindValue(":role_id", $role_id, PDO::PARAM_INT);
+    $statement->execute();
+}
