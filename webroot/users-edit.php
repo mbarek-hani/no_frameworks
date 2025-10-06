@@ -49,12 +49,8 @@ $other_roles = [];
 
 if (mh_request_is_method("GET")) {
     mh_authorization_assert_authorized("ReadUser");
-    $statement = $pdo->prepare(
-        "select id, username, first_name, last_name, email from users where id = :id",
-    );
-    $statement->bindValue(":id", $user_id, PDO::PARAM_INT);
-    $statement->execute();
-    $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+    $user = mh_users_get_by_id($pdo, $user_id);
 
     $statement = $pdo->prepare(
         "select id, name, description from roles, users_roles where role_id = id and user_id = :id",
