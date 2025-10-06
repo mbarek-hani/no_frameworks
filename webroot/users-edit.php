@@ -112,8 +112,7 @@ if (mh_request_is_method("GET")) {
         );
         $errors["email"] = mh_validate_email($edited_user["email"], "email");
 
-        $no_password = empty($edited_user["password"]);
-        if (!$no_password) {
+        if (!empty($edited_user["password"])) {
             $errors["password"] = mh_validate_password($edited_user["password"], $edited_user["password_confirm"], "password");
         }
 
@@ -157,40 +156,7 @@ if (mh_request_is_method("GET")) {
         }
 
         if (mh_errors_is_empty($errors)) {
-            if (!$no_password) {
-                $statement = $pdo->prepare(
-                    "update users set username=:username, first_name=:first_name, last_name=:last_name, email=:email, password=:password where id=:id"
-                );
-                $password_hash = password_hash($edited_user["password"], PASSWORD_DEFAULT);
-                $statement->bindValue(":password", $password_hash, Pdo::PARAM_STR);
-            } else {
-                $statement = $pdo->prepare(
-                    "update users set username=:username, first_name=:first_name, last_name=:last_name, email=:email where id=:id",
-                );
-            }
-            $statement->bindValue(
-                ":username",
-                $edited_user["username"],
-                PDO::PARAM_STR,
-            );
-            $statement->bindValue(
-                ":first_name",
-                $edited_user["first_name"],
-                PDO::PARAM_STR,
-            );
-            $statement->bindValue(
-                ":last_name",
-                $edited_user["last_name"],
-                PDO::PARAM_STR,
-            );
-            $statement->bindValue(
-                ":email",
-                $edited_user["email"],
-                PDO::PARAM_STR,
-            );
-            $statement->bindValue(":id", $edited_user["id"], PDO::PARAM_INT);
-            $statement->execute();
-
+            mh_users_edit($pdo, $edited_user);
             mh_request_redirect("/users");
         }
     }

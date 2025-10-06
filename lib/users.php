@@ -92,3 +92,41 @@ function mh_users_remove_role(PDO $pdo, int $user_id, int $role_id): void
     $statement->bindValue(":role_id", $role_id, PDO::PARAM_INT);
     $statement->execute();
 }
+
+function mh_users_edit(PDO $pdo, array $edited_user): void
+{
+
+    if (!empty($edited_user["password"])) {
+        $statement = $pdo->prepare(
+            "update users set username=:username, first_name=:first_name, last_name=:last_name, email=:email, password=:password where id=:id"
+        );
+        $password_hash = password_hash($edited_user["password"], PASSWORD_DEFAULT);
+        $statement->bindValue(":password", $password_hash, Pdo::PARAM_STR);
+    } else {
+        $statement = $pdo->prepare(
+            "update users set username=:username, first_name=:first_name, last_name=:last_name, email=:email where id=:id",
+        );
+    }
+    $statement->bindValue(
+        ":username",
+        $edited_user["username"],
+        PDO::PARAM_STR,
+    );
+    $statement->bindValue(
+        ":first_name",
+        $edited_user["first_name"],
+        PDO::PARAM_STR,
+    );
+    $statement->bindValue(
+        ":last_name",
+        $edited_user["last_name"],
+        PDO::PARAM_STR,
+    );
+    $statement->bindValue(
+        ":email",
+        $edited_user["email"],
+        PDO::PARAM_STR,
+    );
+    $statement->bindValue(":id", $edited_user["id"], PDO::PARAM_INT);
+    $statement->execute();
+}
