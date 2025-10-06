@@ -52,3 +52,13 @@ function mh_users_get_by_id(PDO $pdo, int $user_id): array
     $statement->execute();
     return $statement->fetch(PDO::FETCH_ASSOC);
 }
+
+function mh_users_get_roles(PDO $pdo, int $user_id): array
+{
+    $statement = $pdo->prepare(
+        "select id, name, description from roles, users_roles where role_id = id and user_id = :id",
+    );
+    $statement->bindValue(":id", $user_id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+}

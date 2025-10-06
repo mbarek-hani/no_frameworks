@@ -9,6 +9,7 @@ require_once "../lib/request.php";
 require_once "../lib/database.php";
 require_once "../lib/validate.php";
 require_once "../lib/template.php";
+require_once "../lib/users.php";
 
 mh_request_assert_methods(["GET", "POST"]);
 
@@ -52,13 +53,8 @@ if (mh_request_is_method("GET")) {
 
     $user = mh_users_get_by_id($pdo, $user_id);
 
-    $statement = $pdo->prepare(
-        "select id, name, description from roles, users_roles where role_id = id and user_id = :id",
-    );
-    $statement->bindValue(":id", $user_id, PDO::PARAM_INT);
-    $statement->execute();
     $user_roles = mh_template_escape_array_of_arrays(
-        $statement->fetchAll(PDO::FETCH_ASSOC),
+        mh_users_get_roles($pdo, $user_id),
     );
 
     $statement = $pdo->prepare(
