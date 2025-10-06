@@ -62,3 +62,13 @@ function mh_users_get_roles(PDO $pdo, int $user_id): array
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function mh_users_get_other_roles(PDO $pdo, int $user_id): array
+{
+    $statement = $pdo->prepare(
+        "select id, name, description from roles where id not in (select role_id from users_roles where user_id = :id)",
+    );
+    $statement->bindValue(":id", $user_id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
