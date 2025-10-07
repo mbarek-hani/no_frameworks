@@ -9,6 +9,7 @@ require_once "../lib/request.php";
 require_once "../lib/database.php";
 require_once "../lib/validate.php";
 require_once "../lib/template.php";
+require_once "../lib/users.php";
 
 mh_request_assert_methods(["GET", "POST"]);
 
@@ -101,37 +102,7 @@ if (mh_request_is_method("POST")) {
     }
 
     if (mh_errors_is_empty($errors)) {
-        $password_hash = password_hash($added_user["password"], PASSWORD_DEFAULT);
-        $statement = $pdo->prepare(
-            "insert into users(username, first_name, last_name, email, password) values (:username, :first_name, :last_name, :email, :password)",
-        );
-        $statement->bindValue(
-            ":username",
-            $added_user["username"],
-            PDO::PARAM_STR,
-        );
-        $statement->bindValue(
-            ":first_name",
-            $added_user["first_name"],
-            PDO::PARAM_STR,
-        );
-        $statement->bindValue(
-            ":last_name",
-            $added_user["last_name"],
-            PDO::PARAM_STR,
-        );
-        $statement->bindValue(
-            ":email",
-            $added_user["email"],
-            PDO::PARAM_STR
-        );
-        $statement->bindValue(
-            ":password",
-            $password_hash,
-            PDO::PARAM_STR,
-        );
-        $statement->execute();
-
+        mh_users_add($pdo, $added_user);
         mh_request_redirect("/users");
     }
 }

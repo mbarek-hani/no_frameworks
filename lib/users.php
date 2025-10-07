@@ -137,3 +137,37 @@ function mh_users_delete(PDO $pdo, int $user_id): void
     $statement->bindValue(":id", $user_id);
     $statement->execute();
 }
+
+function mh_users_add($pdo, $user): void
+{
+    $password_hash = password_hash($user["password"], PASSWORD_DEFAULT);
+    $statement = $pdo->prepare(
+        "insert into users(username, first_name, last_name, email, password) values (:username, :first_name, :last_name, :email, :password)",
+    );
+    $statement->bindValue(
+        ":username",
+        $user["username"],
+        PDO::PARAM_STR,
+    );
+    $statement->bindValue(
+        ":first_name",
+        $user["first_name"],
+        PDO::PARAM_STR,
+    );
+    $statement->bindValue(
+        ":last_name",
+        $user["last_name"],
+        PDO::PARAM_STR,
+    );
+    $statement->bindValue(
+        ":email",
+        $user["email"],
+        PDO::PARAM_STR
+    );
+    $statement->bindValue(
+        ":password",
+        $password_hash,
+        PDO::PARAM_STR,
+    );
+    $statement->execute();
+}
