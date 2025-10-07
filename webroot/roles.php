@@ -40,16 +40,11 @@ if ($total_pages > 0 && $page > $total_pages) {
     mh_request_terminate(400);
 }
 
-$statement = $pdo->prepare(
-    "select * from roles where name like :search limit :offset, :limit",
-);
-$statement->bindValue(":offset", ($page - 1) * $size, PDO::PARAM_INT);
-$statement->bindValue(":limit", $size, PDO::PARAM_INT);
-$statement->bindValue(":search", "%$search%", PDO::PARAM_STR);
-$statement->execute();
+$offset = ($page - 1) * $size;
+$limit = $size;
 
 $roles = mh_template_escape_array_of_arrays(
-    $statement->fetchAll(PDO::FETCH_ASSOC),
+    mh_roles_get_all($pdo, $search, $offset, $limit)
 );
 
 mh_template_render_header("roles");
