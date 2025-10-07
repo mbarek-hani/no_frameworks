@@ -8,6 +8,7 @@ require_once "../lib/authorization.php";
 require_once "../lib/database.php";
 require_once "../lib/request.php";
 require_once "../lib/template.php";
+require_once "../lib/users.php";
 
 mh_request_assert_method("POST");
 
@@ -25,8 +26,6 @@ if (!mh_database_does_row_exist($pdo, "users", $id)) {
     die();
 }
 
-$statement = $pdo->prepare("delete from users where id=:id");
-$statement->bindValue(":id", $id);
-$statement->execute();
+mh_users_delete($pdo, $id);
 
 mh_request_redirect("/users");

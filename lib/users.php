@@ -130,3 +130,10 @@ function mh_users_edit(PDO $pdo, array $edited_user): void
     $statement->bindValue(":id", $edited_user["id"], PDO::PARAM_INT);
     $statement->execute();
 }
+
+function mh_users_delete(PDO $pdo, int $user_id): void
+{
+    $statement = $pdo->prepare("delete from users where id=:id");
+    $statement->bindValue(":id", $user_id);
+    $statement->execute();
+}
