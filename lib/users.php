@@ -138,7 +138,7 @@ function mh_users_delete(PDO $pdo, int $user_id): void
     $statement->execute();
 }
 
-function mh_users_add($pdo, $user): void
+function mh_users_add(PDO $pdo, array $user): void
 {
     $password_hash = password_hash($user["password"], PASSWORD_DEFAULT);
     $statement = $pdo->prepare(
