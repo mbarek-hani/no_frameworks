@@ -33,12 +33,7 @@ $search = mh_validate_search_query_parameter("q");
 
 $pdo = mh_database_get_connection();
 
-$statement = $pdo->prepare(
-    "select count(*) from roles where name like :search",
-);
-$statement->bindValue(":search", "%$search%");
-$statement->execute();
-$total_users = $statement->fetchColumn(0);
+$total_users = mh_roles_count($pdo, $search);
 
 $total_pages = intval(ceil($total_users / $size));
 if ($total_pages > 0 && $page > $total_pages) {
