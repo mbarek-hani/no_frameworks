@@ -57,17 +57,7 @@ if (mh_request_is_method("POST")) {
     }
 
     if (mh_errors_is_empty($errors)) {
-        $statement = $pdo->prepare(
-            "insert into roles(name, description) values (:name, :description)",
-        );
-        $statement->bindValue(":name", $added_role["name"], PDO::PARAM_STR);
-        $statement->bindValue(
-            ":description",
-            $added_role["description"],
-            PDO::PARAM_STR,
-        );
-        $statement->execute();
-
+        mh_roles_add($pdo, $added_role);
         mh_request_redirect("/roles");
     }
 }
