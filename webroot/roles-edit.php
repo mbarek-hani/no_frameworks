@@ -46,10 +46,8 @@ $other_actions = [];
 
 if (mh_request_is_method("GET")) {
     mh_authorization_assert_authorized("ReadRole");
-    $statement = $pdo->prepare("select * from roles where id = :id");
-    $statement->bindValue(":id", $role_id, PDO::PARAM_INT);
-    $statement->execute();
-    $role = $statement->fetch(PDO::FETCH_ASSOC);
+
+    $role = mh_roles_get_by_id($pdo, $role_id);
 
     $statement = $pdo->prepare(
         "select id, name, description from actions, roles_actions where action_id = id and role_id = :id",

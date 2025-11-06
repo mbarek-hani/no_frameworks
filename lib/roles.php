@@ -23,3 +23,11 @@ function mh_roles_get_all(PDO $pdo, string $search_param, int $offset, int $limi
     $statement->execute();
     return $statement->fetchAll(pdo::FETCH_ASSOC);
 }
+
+function mh_roles_get_by_id(PDO $pdo, int $role_id): array
+{
+    $statement = $pdo->prepare("select * from roles where id = :id");
+    $statement->bindValue(":id", $role_id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);
+}
