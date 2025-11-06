@@ -53,13 +53,8 @@ if (mh_request_is_method("GET")) {
         mh_roles_get_actions($pdo, $role_id),
     );
 
-    $statement = $pdo->prepare(
-        "select id, name, description from actions where id not in (select action_id from roles_actions where role_id = :id)",
-    );
-    $statement->bindValue(":id", $role_id, PDO::PARAM_INT);
-    $statement->execute();
     $other_actions = mh_template_escape_array_of_arrays(
-        $statement->fetchAll(PDO::FETCH_ASSOC),
+        mh_roles_get_other_actions($pdo, $role_id),
     );
 } else {
     mh_authorization_assert_authorized("UpdateRole");

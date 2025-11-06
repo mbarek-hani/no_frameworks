@@ -41,3 +41,13 @@ function mh_roles_get_actions(PDO $pdo, int $role_id): array
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function mh_roles_get_other_actions(PDO $pdo, int $role_id): array
+{
+    $statement = $pdo->prepare(
+        "select id, name, description from actions where id not in (select action_id from roles_actions where role_id = :id)",
+    );
+    $statement->bindValue(":id", $role_id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
