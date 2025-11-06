@@ -31,3 +31,13 @@ function mh_roles_get_by_id(PDO $pdo, int $role_id): array
     $statement->execute();
     return $statement->fetch(PDO::FETCH_ASSOC);
 }
+
+function mh_roles_get_actions(PDO $pdo, int $role_id): array
+{
+    $statement = $pdo->prepare(
+        "select id, name, description from actions, roles_actions where action_id = id and role_id = :id",
+    );
+    $statement->bindValue(":id", $role_id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+}

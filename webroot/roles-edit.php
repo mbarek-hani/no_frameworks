@@ -49,13 +49,8 @@ if (mh_request_is_method("GET")) {
 
     $role = mh_roles_get_by_id($pdo, $role_id);
 
-    $statement = $pdo->prepare(
-        "select id, name, description from actions, roles_actions where action_id = id and role_id = :id",
-    );
-    $statement->bindValue(":id", $role_id, PDO::PARAM_INT);
-    $statement->execute();
     $role_actions = mh_template_escape_array_of_arrays(
-        $statement->fetchAll(PDO::FETCH_ASSOC),
+        mh_roles_get_actions($pdo, $role_id),
     );
 
     $statement = $pdo->prepare(
