@@ -77,5 +77,5 @@ if (mh_request_is_method("POST")) {
 $credentials = mh_template_escape_array($credentials);
 
 mh_template_render_header("Login");
-mh_render_login(mh_template_escape_array($credentials), $errors);
+mh_render_login($credentials, $errors);
 mh_template_render_footer();
