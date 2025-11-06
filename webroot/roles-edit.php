@@ -9,6 +9,7 @@ require_once "../lib/request.php";
 require_once "../lib/database.php";
 require_once "../lib/validate.php";
 require_once "../lib/template.php";
+require_once "../lib/roles.php";
 
 mh_request_assert_methods(["GET", "POST"]);
 
