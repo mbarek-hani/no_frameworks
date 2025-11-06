@@ -71,3 +71,22 @@ function mh_roles_remove_action(PDO $pdo, int $role_id, int $action_id): void
     $statement->bindValue(":action_id", $action_id, PDO::PARAM_INT);
     $statement->execute();
 }
+
+function mh_roles_edit(PDO $pdo, array $edited_role): void
+{
+    $statement = $pdo->prepare(
+        "update roles set name=:name, description=:description where id=:id",
+    );
+    $statement->bindValue(":id", $edited_role["id"], PDO::PARAM_STR);
+    $statement->bindValue(
+        ":name",
+        $edited_role["name"],
+        PDO::PARAM_STR,
+    );
+    $statement->bindValue(
+        ":description",
+        $edited_role["description"],
+        PDO::PARAM_STR,
+    );
+    $statement->execute();
+}

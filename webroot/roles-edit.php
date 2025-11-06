@@ -112,21 +112,7 @@ if (mh_request_is_method("GET")) {
         }
 
         if (mh_errors_is_empty($errors)) {
-            $statement = $pdo->prepare(
-                "update roles set name=:name, description=:description where id=:id",
-            );
-            $statement->bindValue(":id", $role_id, PDO::PARAM_STR);
-            $statement->bindValue(
-                ":name",
-                $edited_role["name"],
-                PDO::PARAM_STR,
-            );
-            $statement->bindValue(
-                ":description",
-                $edited_role["description"],
-                PDO::PARAM_STR,
-            );
-            $statement->execute();
+            mh_roles_edit($pdo, $edited_role);
             mh_request_redirect("/roles");
         }
     }
