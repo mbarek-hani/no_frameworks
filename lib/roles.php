@@ -51,3 +51,13 @@ function mh_roles_get_other_actions(PDO $pdo, int $role_id): array
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function mh_roles_add_action(PDO $pdo, int $role_id, int $action_id): void
+{
+    $statement = $pdo->prepare(
+        "insert into roles_actions values(:role_id, :action_id)",
+    );
+    $statement->bindValue(":role_id", $role_id, PDO::PARAM_INT);
+    $statement->bindValue(":action_id", $action_id, PDO::PARAM_INT);
+    $statement->execute();
+}
