@@ -79,12 +79,7 @@ if (mh_request_is_method("GET")) {
                 mh_request_redirect("/roles/edit/$role_id");
                 break;
             case "remove":
-                $statement = $pdo->prepare(
-                    "delete from roles_actions where role_id=:role_id and action_id=:action_id",
-                );
-                $statement->bindValue(":role_id", $role_id, PDO::PARAM_INT);
-                $statement->bindValue(":action_id", $action_id, PDO::PARAM_INT);
-                $statement->execute();
+                mh_roles_remove_action($pdo, $role_id, $action_id);
                 mh_request_redirect("/roles/edit/$role_id");
                 break;
             default:

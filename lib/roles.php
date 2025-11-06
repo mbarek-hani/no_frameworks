@@ -61,3 +61,13 @@ function mh_roles_add_action(PDO $pdo, int $role_id, int $action_id): void
     $statement->bindValue(":action_id", $action_id, PDO::PARAM_INT);
     $statement->execute();
 }
+
+function mh_roles_remove_action(PDO $pdo, int $role_id, int $action_id): void
+{
+    $statement = $pdo->prepare(
+        "delete from roles_actions where role_id=:role_id and action_id=:action_id",
+    );
+    $statement->bindValue(":role_id", $role_id, PDO::PARAM_INT);
+    $statement->bindValue(":action_id", $action_id, PDO::PARAM_INT);
+    $statement->execute();
+}
