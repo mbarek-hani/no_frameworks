@@ -54,12 +54,14 @@ function mh_users_remove_role(PDO $pdo, int $user_id, int $role_id): void
 
 function mh_users_edit(PDO $pdo, array $edited_user): void
 {
-
     if (!empty($edited_user["password"])) {
         $statement = $pdo->prepare(
-            "update users set username=:username, first_name=:first_name, last_name=:last_name, email=:email, password=:password where id=:id"
+            "update users set username=:username, first_name=:first_name, last_name=:last_name, email=:email, password=:password where id=:id",
         );
-        $password_hash = password_hash($edited_user["password"], PASSWORD_DEFAULT);
+        $password_hash = password_hash(
+            $edited_user["password"],
+            PASSWORD_DEFAULT,
+        );
         $statement->bindValue(":password", $password_hash, Pdo::PARAM_STR);
     } else {
         $statement = $pdo->prepare(
@@ -81,19 +83,8 @@ function mh_users_edit(PDO $pdo, array $edited_user): void
         $edited_user["last_name"],
         PDO::PARAM_STR,
     );
-    $statement->bindValue(
-        ":email",
-        $edited_user["email"],
-        PDO::PARAM_STR,
-    );
+    $statement->bindValue(":email", $edited_user["email"], PDO::PARAM_STR);
     $statement->bindValue(":id", $edited_user["id"], PDO::PARAM_INT);
-    $statement->execute();
-}
-
-function mh_users_delete(PDO $pdo, int $user_id): void
-{
-    $statement = $pdo->prepare("delete from users where id=:id");
-    $statement->bindValue(":id", $user_id);
     $statement->execute();
 }
 
@@ -103,30 +94,10 @@ function mh_users_add(PDO $pdo, array $user): void
     $statement = $pdo->prepare(
         "insert into users(username, first_name, last_name, email, password) values (:username, :first_name, :last_name, :email, :password)",
     );
-    $statement->bindValue(
-        ":username",
-        $user["username"],
-        PDO::PARAM_STR,
-    );
-    $statement->bindValue(
-        ":first_name",
-        $user["first_name"],
-        PDO::PARAM_STR,
-    );
-    $statement->bindValue(
-        ":last_name",
-        $user["last_name"],
-        PDO::PARAM_STR,
-    );
-    $statement->bindValue(
-        ":email",
-        $user["email"],
-        PDO::PARAM_STR
-    );
-    $statement->bindValue(
-        ":password",
-        $password_hash,
-        PDO::PARAM_STR,
-    );
+    $statement->bindValue(":username", $user["username"], PDO::PARAM_STR);
+    $statement->bindValue(":first_name", $user["first_name"], PDO::PARAM_STR);
+    $statement->bindValue(":last_name", $user["last_name"], PDO::PARAM_STR);
+    $statement->bindValue(":email", $user["email"], PDO::PARAM_STR);
+    $statement->bindValue(":password", $password_hash, PDO::PARAM_STR);
     $statement->execute();
 }
