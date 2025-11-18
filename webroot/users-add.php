@@ -9,7 +9,6 @@ require_once "../lib/request.php";
 require_once "../lib/database.php";
 require_once "../lib/validate.php";
 require_once "../lib/template.php";
-require_once "../lib/users.php";
 
 mh_request_assert_methods(["GET", "POST"]);
 
@@ -20,6 +19,20 @@ mh_authorization_assert_authorized("CreateUser");
 function mh_render_users_add(array $user, array $errors): void
 {
     require "../templates/users-add.php";
+}
+
+function mh_users_add(PDO $pdo, array $user): void
+{
+    $password_hash = password_hash($user["password"], PASSWORD_DEFAULT);
+    $statement = $pdo->prepare(
+        "insert into users(username, first_name, last_name, email, password) values (:username, :first_name, :last_name, :email, :password)",
+    );
+    $statement->bindValue(":username", $user["username"], PDO::PARAM_STR);
+    $statement->bindValue(":first_name", $user["first_name"], PDO::PARAM_STR);
+    $statement->bindValue(":last_name", $user["last_name"], PDO::PARAM_STR);
+    $statement->bindValue(":email", $user["email"], PDO::PARAM_STR);
+    $statement->bindValue(":password", $password_hash, PDO::PARAM_STR);
+    $statement->execute();
 }
 
 $pdo = mh_database_get_connection();
@@ -63,7 +76,11 @@ if (mh_request_is_method("POST")) {
         "last name",
     );
     $errors["email"] = mh_validate_email($added_user["email"], "email");
-    $errors["password"] = mh_validate_password($added_user["password"], $added_user["password_confirm"], "password");
+    $errors["password"] = mh_validate_password(
+        $added_user["password"],
+        $added_user["password_confirm"],
+        "password",
+    );
 
     if (
         $errors["username"] === null &&
