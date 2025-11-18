@@ -9,7 +9,6 @@ require_once "../lib/database.php";
 require_once "../lib/request.php";
 require_once "../lib/template.php";
 require_once "../lib/validate.php";
-require_once "../lib/users.php";
 
 mh_request_assert_method("GET");
 
@@ -26,6 +25,36 @@ function mh_render_users(
     int $size,
 ) {
     require "../templates/users.php";
+}
+
+function mh_users_count(PDO $pdo, string $search_param): int
+{
+    if ($search_param !== "") {
+        $statement = $pdo->prepare(
+            "select count(*) from users where username like :search",
+        );
+        $statement->bindValue(":search", "%$search_param%");
+        $statement->execute();
+    } else {
+        $statement = $pdo->query("select * from users");
+    }
+    return intval($statement->fetchColumn(0));
+}
+
+function mh_users_get_all(
+    PDO $pdo,
+    string $search_param,
+    int $offset,
+    int $limit,
+): array {
+    $statement = $pdo->prepare(
+        "select id, username, first_name, last_name, email from users where username like :search limit :offset, :limit",
+    );
+    $statement->bindValue(":offset", $offset, PDO::PARAM_INT);
+    $statement->bindValue(":limit", $limit, PDO::PARAM_INT);
+    $statement->bindValue(":search", "%$search_param%", PDO::PARAM_STR);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 
 $page = mh_request_get_int_parameter("page", INPUT_GET, 1, PHP_INT_MAX, 1);
@@ -45,7 +74,7 @@ $offset = ($page - 1) * $size;
 $limit = $size;
 
 $users = mh_template_escape_array_of_arrays(
-    mh_users_get_all($pdo, $search, $offset, $limit)
+    mh_users_get_all($pdo, $search, $offset, $limit),
 );
 
 mh_template_render_header("Users");
