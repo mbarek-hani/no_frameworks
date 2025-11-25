@@ -26,6 +26,13 @@ if (!mh_database_does_row_exist($pdo, "roles", $id)) {
     die();
 }
 
+function mh_roles_delete(PDO $pdo, int $role_id): void
+{
+    $statement = $pdo->prepare("delete from roles where id=:id");
+    $statement->bindValue(":id", $role_id, PDO::PARAM_INT);
+    $statement->execute();
+}
+
 mh_roles_delete($pdo, $id);
 
 mh_request_redirect("/roles");

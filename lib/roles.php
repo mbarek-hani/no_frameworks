@@ -64,10 +64,3 @@ function mh_roles_edit(PDO $pdo, array $edited_role): void
     );
     $statement->execute();
 }
-
-function mh_roles_delete(PDO $pdo, int $role_id): void
-{
-    $statement = $pdo->prepare("delete from roles where id=:id");
-    $statement->bindValue(":id", $role_id, PDO::PARAM_INT);
-    $statement->execute();
-}
