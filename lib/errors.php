@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
+ob_start();
+
 function development_error_handler(
     int $errno,
     string $errstr,
     string $errfile,
     int $errline,
 ) {
+    ob_clean();
     http_response_code(500);
     echo "<pre><strong>ERROR [$errno]</strong>: $errstr in $errfile on line $errline</pre>";
     exit(1);
@@ -15,6 +18,7 @@ function development_error_handler(
 
 function development_exception_handler(Throwable $exception)
 {
+    ob_clean();
     http_response_code(500);
     echo "<pre><strong>UNCAUGHT EXCEPTION</strong>: " .
         $exception->getMessage() .
