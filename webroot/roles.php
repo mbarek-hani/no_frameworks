@@ -9,7 +9,6 @@ require_once "../lib/database.php";
 require_once "../lib/request.php";
 require_once "../lib/template.php";
 require_once "../lib/validate.php";
-require_once "../lib/roles.php";
 
 mh_request_assert_method("GET");
 
@@ -26,6 +25,32 @@ function mh_render_roles(
     int $size,
 ) {
     require "../templates/roles.php";
+}
+
+function mh_roles_count(PDO $pdo, string $search_param): int
+{
+    $statement = $pdo->prepare(
+        "select count(*) from roles where name like :search",
+    );
+    $statement->bindValue(":search", "%$search_param%");
+    $statement->execute();
+    return $statement->fetchColumn(0);
+}
+
+function mh_roles_get_all(
+    PDO $pdo,
+    string $search_param,
+    int $offset,
+    int $limit,
+): array {
+    $statement = $pdo->prepare(
+        "select * from roles where name like :search limit :offset, :limit",
+    );
+    $statement->bindValue(":offset", $offset, PDO::PARAM_INT);
+    $statement->bindValue(":limit", $limit, PDO::PARAM_INT);
+    $statement->bindValue(":search", "%$search_param%", PDO::PARAM_STR);
+    $statement->execute();
+    return $statement->fetchAll(pdo::FETCH_ASSOC);
 }
 
 $page = mh_request_get_int_parameter("page", INPUT_GET, 1, PHP_INT_MAX, 1);
@@ -45,7 +70,7 @@ $offset = ($page - 1) * $size;
 $limit = $size;
 
 $roles = mh_template_escape_array_of_arrays(
-    mh_roles_get_all($pdo, $search, $offset, $limit)
+    mh_roles_get_all($pdo, $search, $offset, $limit),
 );
 
 mh_template_render_header("roles");
