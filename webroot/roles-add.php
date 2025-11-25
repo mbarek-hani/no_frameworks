@@ -21,6 +21,20 @@ function mh_render_roles_add(array $role, array $errors): void
     require "../templates/roles-add.php";
 }
 
+function mh_roles_add(PDO $pdo, array $added_role): void
+{
+    $statement = $pdo->prepare(
+        "insert into roles(name, description) values (:name, :description)",
+    );
+    $statement->bindValue(":name", $added_role["name"], PDO::PARAM_STR);
+    $statement->bindValue(
+        ":description",
+        $added_role["description"],
+        PDO::PARAM_STR,
+    );
+    $statement->execute();
+}
+
 $pdo = mh_database_get_connection();
 
 $errors = [
