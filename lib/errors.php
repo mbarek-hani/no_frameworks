@@ -16,7 +16,7 @@ function log_error(string $message): void
     if (!$handle) {
         return;
     }
-    fwrite($handle, $message);
+    fwrite($handle, sprintf("ERROR: %s %s\n", date(DATE_LOG_FORMAT), $message));
     fclose($handle);
 }
 
@@ -33,7 +33,7 @@ function error_handler(
         $debug = true;
     }
     if (!$debug) {
-        log_error(sprintf("ERROR [%d]: %s %s in %s on line %d\n", $errno, date(DATE_LOG_FORMAT), $errstr, $errfile, $errline));
+        log_error(sprintf("%s in %s on line %d code %d", $errstr, $errfile, $errline, $errno));
         mh_template_render_header("Server error");
         mh_template_render_sidebar("");
         require_once __DIR__ . "/../templates/500.php";
@@ -53,7 +53,7 @@ function exception_handler(Throwable $exception)
         $debug = true;
     }
     if (!$debug) {
-        log_error(sprintf("ERROR: %s UNCAUGHT EXCEPTION: %s %s", date(DATE_LOG_FORMAT), $exception->getMessage(), $exception->getTraceAsString()));
+        log_error(sprintf("UNCAUGHT EXCEPTION: %s \n\t%s", $exception->getMessage(),  str_replace("\n", "\n\t", $exception->getTraceAsString())));
         mh_template_render_header("Server error");
         mh_template_render_sidebar("");
         require_once __DIR__ . "/../templates/500.php";
